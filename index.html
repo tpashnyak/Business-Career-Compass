@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#0b1a33">
-<meta name="description" content="Spin the Business Career Compass, play Profit Rush, and earn a prize badge. ABAC Bainbridge, Stafford School of Business.">
+<meta name="description" content="Spin the Business Career Compass, launch a pop-up business, and earn a prize badge. ABAC Bainbridge, Stafford School of Business.">
 <title>Business Career Compass · ABAC Bainbridge</title>
 <style>
 :root{
@@ -196,6 +196,33 @@ h2{font-size:28px;line-height:1.15}
 .ta{position:relative}
 .tbonus{font-family:var(--mono);color:var(--green);font-weight:700;min-height:1.4em}
 
+
+/* Launch It! */
+.lwrap{width:100%;display:flex;flex-direction:column;align-items:center;gap:12px}
+.scene{background:rgba(255,255,255,.07);border-radius:14px;padding:8px 12px;font-size:14px;font-weight:700;color:var(--gold2)}
+.ps{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;width:100%}
+.ps span{font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;padding:7px 2px;border-radius:99px;
+  background:rgba(255,255,255,.07);color:var(--muted);border:1px solid transparent}
+.ps span.now{border-color:var(--gold);color:var(--gold2)}
+.ps span.done{background:rgba(242,193,78,.25);color:var(--ink)}
+.lo{display:flex;align-items:center;gap:14px;text-align:left;padding:12px 16px}
+.lo .le{font-size:38px;line-height:1}
+.lo .lt{display:flex;flex-direction:column}
+.lo small{font-weight:600;font-size:14px;color:var(--muted)}
+.street{position:relative;width:100%;height:96px;border-radius:18px;overflow:hidden;
+  background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.02));border-bottom:4px solid rgba(242,193,78,.5)}
+.shop{position:absolute;right:10px;top:50%;transform:translateY(-50%);font-size:52px;animation:bob .6s ease-in-out infinite alternate}
+@keyframes bob{to{transform:translateY(-58%) scale(1.06)}}
+.cust{position:absolute;left:-30px;font-size:28px;animation:walk 1.2s linear forwards}
+@keyframes walk{to{transform:translateX(calc(100vw - 90px));opacity:.2}}
+@media (min-width:480px){@keyframes walk{to{transform:translateX(360px);opacity:.2}}}
+.go-big.loss{color:var(--red)}
+.rcpt{font-size:15px;color:var(--muted)}
+.rcpt b{color:var(--ink)}
+.stars{display:grid;gap:6px;width:100%;max-width:280px}
+.srow{display:flex;justify-content:space-between;background:rgba(255,255,255,.06);border-radius:12px;padding:7px 12px;font-weight:700}
+.tip{font-size:16px;font-weight:700;color:var(--gold2)}
+
 #fx{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:30}
 
 @media (max-width:360px){h1{font-size:34px}h1 span{font-size:40px}.opt{min-height:150px}.opt .em{font-size:46px}.compass{width:210px;height:210px}}
@@ -209,6 +236,14 @@ h2{font-size:28px;line-height:1.15}
   .b-stats div{padding:6px 4px}
   .b-code{margin-top:8px}
   .claim{font-size:17px}
+  #s-game{padding-top:52px;gap:10px}
+  #lresult{gap:8px}
+  .go-big{font-size:46px}
+  .srow{padding:4px 12px}
+  .stars{gap:4px}
+  .tip{font-size:15px}
+  .lo{padding:9px 14px}
+  .lo .le{font-size:32px}
 }
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
@@ -228,7 +263,7 @@ h2{font-size:28px;line-height:1.15}
     <div class="needle"><svg viewBox="0 0 200 200"><use href="#ndl"/></svg></div>
   </div>
   <h1 id="h-start" tabindex="-1">Business <span>Career Compass</span></h1>
-  <p class="sub">8 taps · 1 game · 5 trivia · 1 prize 🎁</p>
+  <p class="sub">8 taps · 1 business · 5 trivia · 1 prize 🎁</p>
   <div class="names">
     <div><label for="nm" class="lbl">First name</label>
     <input id="nm" class="nmi" maxlength="20" autocomplete="given-name" autocapitalize="words" placeholder="First" enterkeyhint="next"></div>
@@ -265,32 +300,34 @@ h2{font-size:28px;line-height:1.15}
     <ul class="chips" id="r-jobs" aria-label="Careers to explore"></ul>
     <div class="bars" id="r-bars"></div>
     <p class="r-abac">🎓 Every direction starts with a <b>BS in Business</b> at ABAC Bainbridge</p>
-    <button class="btn" id="toGame">Earn your badge 💰</button>
+    <button class="btn" id="toGame">Run a business 🚀</button>
   </div>
 </section>
 
 <!-- GAME -->
 <section id="s-game" class="screen" aria-labelledby="h-game">
-  <h2 id="h-game" tabindex="-1">Profit Rush 💰</h2>
-  <div class="howto" id="howto">
-    <div class="rules">
-      <div class="rule good"><span class="big" aria-hidden="true">🪙💵💎</span>TAP = profit</div>
-      <div class="rule bad"><span class="big" aria-hidden="true">🧾</span>Bills = −$20</div>
-    </div>
-    <div class="tiers" aria-label="Badge levels: game cash plus trivia bonus. Bronze, Silver at 200 dollars, Gold at 350 dollars"><span>🥉 Bronze</span><span>🥈 $200</span><span>🥇 $350</span></div>
-    <p class="sub" style="font-size:14px">Game cash + trivia bonus = your badge</p>
-    <button class="btn" id="startGame">Start! ⏱ 20 sec</button>
+  <p class="brand">🚀 Launch It! · The 4 Ps</p>
+  <div id="lpick" class="lwrap">
+    <p class="scene">🏟️ Friday night football · big crowd of teens &amp; families</p>
+    <div class="ps" id="ps" aria-hidden="true"><span>Product</span><span>Price</span><span>Place</span><span>Promotion</span></div>
+    <h2 id="h-game" tabindex="-1">What will you sell?</h2>
+    <p class="tq-src" id="lsub"></p>
+    <div class="tans" id="lopts"></div>
   </div>
-  <div class="play" id="play" hidden>
-    <div class="hud" aria-hidden="true"><span>💰 $<b id="score">0</b></span><span>⏱ <b id="time">20</b></span></div>
-    <div class="timebar" aria-hidden="true"><div id="tb"></div></div>
-    <div class="grid" id="grid" role="group" aria-label="Profit Rush board"></div>
+  <div id="llaunch" class="lwrap" hidden>
+    <h2 id="h-launch" tabindex="-1">Launch day! 🎉</h2>
+    <div class="street" aria-hidden="true"><div class="crowd" id="crowd"></div><span class="shop" id="shop">🏪</span></div>
+    <div class="hud" aria-hidden="true"><span>🧍 <b id="lc">0</b></span><span>💵 $<b id="lr">0</b></span></div>
   </div>
-  <div class="gameover" id="gameover" hidden>
-    <p class="go-big">$<span id="go-score">0</span></p>
-    <p class="go-tier" id="go-tier"></p>
+  <div id="lresult" class="gameover" hidden>
+    <h2 id="h-res" tabindex="-1" class="sr">Your results</h2>
+    <p class="go-big" id="lprofit"></p>
+    <p class="sub" style="margin-top:-8px">profit</p>
+    <p class="rcpt">🧍 <b id="rc"></b> customers · 💵 <b id="rr"></b> sales · 🧾 <b id="rk"></b> costs</p>
+    <div class="stars" id="stars"></div>
+    <p class="tip" id="tip"></p>
     <button class="btn" id="claimBtn">Bonus round 🐎</button>
-    <button class="btn ghost" id="again">One more try 🔁</button>
+    <button class="btn ghost" id="again">Keep trying: new plan 🔁</button>
   </div>
 </section>
 
@@ -362,13 +399,16 @@ h2{font-size:28px;line-height:1.15}
   const $ = id => document.getElementById(id);
   const KEY = 'abac-career-compass-v1';
   const RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (/[?&]reset/.test(location.search)) { try { localStorage.removeItem(KEY); } catch (e) {} }
+  // Everything is kept only for this tab (sessionStorage) and is wiped when the student closes it.
+  const store = (() => { try { return window.sessionStorage; } catch (e) { return null; } })();
+  try { localStorage.removeItem(KEY); } catch (e) {}   // clear anything an older version left behind
+  if (/[?&]reset/.test(location.search)) { try { store && store.removeItem(KEY); } catch (e) {} }
 
   const DIRS = {
     N: { word:'NORTH', name:'The Captain',     em:'⭐', field:'Management & Leadership', jobs:['Operations Manager','HR Manager','Sales Manager'] },
     E: { word:'EAST',  name:'The Spark',       em:'⚡', field:'Marketing & Sales',       jobs:['Brand Manager','Social Media Strategist','Event Marketer'] },
     S: { word:'SOUTH', name:'The Strategist',  em:'📊', field:'Finance & Accounting',    jobs:['Financial Analyst','Accountant','Banker'] },
-    W: { word:'WEST',  name:'The Trailblazer', em:'🚀', field:'Entrepreneurship',        jobs:['Startup Founder','Small Business Owner','Agribusiness Owner'] }
+    W: { word:'WEST',  name:'The Trailblazer', em:'🚀', field:'Entrepreneurship',        jobs:['Startup Founder','Small Business Owner','Franchise Owner'] }
   };
   const ANG = { N:0, E:90, S:180, W:270 };
   const Q = [
@@ -381,7 +421,7 @@ h2{font-size:28px;line-height:1.15}
     { q:'A local shop is struggling. You…',    o:[{e:'🤝',t:'Coach the team',d:'N'},{e:'📱',t:'Make it go viral',d:'E'}] },
     { q:'Got $100 birthday cash?',             o:[{e:'🏦',t:'Save & grow it',d:'S'},{e:'🛒',t:'Buy, resell, profit',d:'W'}] }
   ];
-  const TIERS = s => s >= 350 ? {k:'gold',l:'GOLD',e:'🥇'} : s >= 200 ? {k:'silver',l:'SILVER',e:'🥈'} : {k:'bronze',l:'BRONZE',e:'🥉'};
+  const TIERS = s => s >= 480 ? {k:'gold',l:'GOLD',e:'🥇'} : s >= 300 ? {k:'silver',l:'SILVER',e:'🥈'} : {k:'bronze',l:'BRONZE',e:'🥉'};
 
   const BIZ = 'https://www.abac.edu/academics/schools/business/index.html';
   const BAIN = 'https://www.abac.edu/academics/bainbridge.html';
@@ -394,8 +434,8 @@ h2{font-size:28px;line-height:1.15}
       a:['17','1,730','173'], c:2 },
     { q:'You can dual enroll at ABAC Bainbridge after finishing which grade?', u:BAIN, s:'ABAC Bainbridge page',
       a:['10th grade','11th grade','12th grade'], c:0 },
-    { q:'Which ABAC professor was just named NBEA Southern Region Collegiate Teacher of the Year?', u:BAIN, s:'ABAC Bainbridge page · Bainbridge News',
-      a:['Dr. Abul Sheikh','Tatyana Pashnyak','Dr. Diantha Ellis'], c:1 }
+    { q:'Who is a Business Professor at ABAC Bainbridge?', u:'https://www.abac.edu/directory/profiles/tatyana-pashnyak.html', s:'she might be standing right in front of you 😉',
+      a:['Professor Moneybags','Dr. Stock Market','Tatyana Pashnyak'], c:2 }
   ];
   const BONUS = 30;
 
@@ -543,90 +583,142 @@ h2{font-size:28px;line-height:1.15}
     $('r-title').focus({ preventScroll:true });
     say(`You are ${d.name}: ${d.field}.`);
   }
-  $('toGame').onclick = () => { tone(700); show('s-game'); };
+  $('toGame').onclick = () => { tone(700); startPlan(); show('s-game'); };
 
-  /* ---------- Profit Rush ---------- */
-  const ITEMS = [
-    { e:'🪙', v:10,  w:45, l:'coin, tap' },
-    { e:'💵', v:20,  w:25, l:'cash, tap' },
-    { e:'💎', v:50,  w:5,  l:'diamond, tap' },
-    { e:'🧾', v:-20, w:25, l:'bill, do not tap' }
+  /* ---------- Launch It! (4 Ps) ---------- */
+  const PROD = [
+    { e:'🧋', t:'Boba tea',     c:2,   ap:1.0,  pr:[3,5,9] },
+    { e:'🍕', t:'Pizza slices', c:1.5, ap:1.25, pr:[2,4,8] },
+    { e:'🧥', t:'Team hoodies', c:18,  ap:.15,  pr:[20,35,60] }
   ];
-  const DUR = 20000;
-  const grid = $('grid'), cells = [], occ = Array(9).fill(null);
-  for (let i = 0; i < 9; i++) {
-    const c = document.createElement('button');
-    c.className = 'cell'; c.setAttribute('aria-label', 'empty spot');
-    c.innerHTML = '<span class="it" aria-hidden="true"></span>';
-    c.addEventListener('pointerdown', e => { e.preventDefault(); hit(i); });
-    c.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); hit(i); } });
-    grid.appendChild(c); cells.push(c);
-  }
-  let run = false, score = 0, t0 = 0, timers = [];
-  const prog = () => Math.min(1, (performance.now() - t0) / DUR);
-  function pick() { let r = Math.random() * 100; for (const it of ITEMS) { if ((r -= it.w) < 0) return it; } return ITEMS[0]; }
-  function startGame() {
-    st.tries++; score = 0; $('score').textContent = '0'; $('time').textContent = '20';
-    $('howto').hidden = true; $('gameover').hidden = true; $('play').hidden = false;
-    run = true; t0 = performance.now();
-    for (let i = 0; i < 9; i++) clear(i);
-    say('Go! Tap the money, skip the bills.');
-    tone(880, .15, 'square', .05);
-    spawn(); requestAnimationFrame(tick);
-  }
-  function spawn() {
-    if (!run) return;
-    const free = []; occ.forEach((v, i) => { if (!v) free.push(i); });
-    const n = prog() > .55 && Math.random() < .35 ? 2 : 1;
-    for (let k = 0; k < n && free.length; k++) put(free.splice(Math.floor(Math.random() * free.length), 1)[0], pick());
-    timers.push(setTimeout(spawn, 640 - prog() * 280));
-  }
-  function put(i, it) {
-    const c = cells[i]; occ[i] = it;
-    c.querySelector('.it').textContent = it.e;
-    c.classList.add('up'); c.classList.toggle('bad', it.v < 0);
-    c.setAttribute('aria-label', it.l);
-    clearTimeout(c._t); c._t = setTimeout(() => clear(i), 1150 - prog() * 450);
-  }
-  function clear(i) {
-    const c = cells[i]; clearTimeout(c._t); occ[i] = null;
-    c.classList.remove('up', 'bad'); c.setAttribute('aria-label', 'empty spot');
-  }
+  const PRICE_F = [1.3, 1, .3], PRICE_L = ['Bargain','Fair','Premium'], PRICE_E = ['🏷️','💲','💎'];
+  const PLACE = [
+    { e:'🏟️', t:'Stadium gate',     s:'Huge crowd · $120 fee', tr:140, fee:120 },
+    { e:'🏫', t:'School lobby',     s:'Some traffic · $20 fee', tr:70,  fee:20 },
+    { e:'🅿️', t:'Back parking lot', s:'Quiet · free',           tr:35,  fee:0 }
+  ];
+  const PROMO = [
+    { e:'📱', t:'TikTok video', s:'Costs $20', b:1.35, c:20 },
+    { e:'🪧', t:'Posters',      s:'Costs $15', b:1.15, c:15 },
+    { e:'📰', t:'Newspaper ad', s:'Costs $40', b:1.05, c:40 }
+  ];
+  const STEPS = [
+    { p:'Product',   q:'What will you sell?' },
+    { p:'Price',     q:'Set your price' },
+    { p:'Place',     q:'Where’s your stand?' },
+    { p:'Promotion', q:'How will you spread the word?' }
+  ];
+  const TIPS = [
+    'Product: sell what this crowd craves 🍕',
+    'Price: too cheap = no profit, too pricey = no customers 💲',
+    'Place: go where the crowd is 🏟️',
+    'Promotion: reach teens where they scroll 📱'
+  ];
   function floatTxt(el, t, neg) {
     const s = document.createElement('span'); s.className = 'float' + (neg ? ' neg' : ''); s.textContent = t;
     el.appendChild(s); setTimeout(() => s.remove(), 720);
   }
-  function hit(i) {
-    if (!run || !occ[i]) return;
-    const it = occ[i];
-    score = Math.max(0, score + it.v); $('score').textContent = score;
-    floatTxt(cells[i], (it.v > 0 ? '+$' : '−$') + Math.abs(it.v), it.v < 0);
-    if (it.v > 0) { tone(600 + it.v * 10, .08, 'triangle'); buzz(10); }
-    else { tone(150, .2, 'sawtooth', .06); buzz([30, 40, 30]); const p = $('play'); p.classList.remove('hurt'); void p.offsetWidth; p.classList.add('hurt'); }
-    clear(i);
+  const money = v => (Number.isInteger(v) ? '$' + v : '$' + v.toFixed(2));
+  function sim(c) {
+    const P = PROD[c[0]], pl = PLACE[c[2]], pm = PROMO[c[3]], price = P.pr[c[1]];
+    const cust = Math.round(pl.tr * P.ap * PRICE_F[c[1]] * pm.b);
+    const rev = cust * price, costs = Math.round(cust * P.c + pl.fee + pm.c);
+    return { cust, rev, costs, profit: Math.round(rev - costs) };
   }
-  function tick() {
-    if (!run) return;
-    const p = prog();
-    $('tb').style.transform = `scaleX(${1 - p})`;
-    $('time').textContent = Math.ceil((1 - p) * DUR / 1000);
-    if (p >= 1) { endGame(); return; }
-    requestAnimationFrame(tick);
+  function starsFor(c) {
+    return c.map((pick, d) => {
+      const mine = sim(c).profit; let better = 0;
+      for (let k = 0; k < 3; k++) { if (k === pick) continue; const alt = c.slice(); alt[d] = k; if (sim(alt).profit > mine) better++; }
+      return 3 - better;
+    });
   }
-  function endGame() {
-    run = false; timers.forEach(clearTimeout); timers = [];
-    for (let i = 0; i < 9; i++) clear(i);
-    st.best = Math.max(st.best, score);
-    $('play').hidden = true; $('gameover').hidden = false;
-    $('go-score').textContent = score;
-    $('go-tier').textContent = (st.tries > 1 && st.best !== score ? `Best: $${st.best} · ` : '') + 'Now win bonus cash! 🐎';
-    $('again').hidden = st.tries >= 2;
-    fanfare(); confetti(50);
-    say(`Time! You made ${score} dollars. Next, the bonus trivia round.`);
-    setTimeout(() => $('claimBtn').focus({ preventScroll:true }), 50);
+  let ch = [], step = 0, lLock = false;
+  function optsFor(i) {
+    if (i === 0) return PROD.map(o => ({ e:o.e, t:o.t, s:`Costs you ${money(o.c)} each` }));
+    if (i === 1) return PROD[ch[0]].pr.map((v, k) => ({ e:PRICE_E[k], t:`$${v} each`, s:PRICE_L[k] }));
+    return (i === 2 ? PLACE : PROMO).map(o => ({ e:o.e, t:o.t, s:o.s }));
   }
-  $('startGame').onclick = startGame;
-  $('again').onclick = startGame;
+  function renderStep() {
+    const S = STEPS[step];
+    $('h-game').textContent = S.q;
+    $('lsub').textContent = step === 1 ? `You pay ${money(PROD[ch[0]].c)} for each ${PROD[ch[0]].t.toLowerCase().replace(/s$/, '')}` : `P ${step + 1} of 4 · ${S.p}`;
+    [...$('ps').children].forEach((el, k) => { el.className = k < step ? 'done' : k === step ? 'now' : ''; });
+    $('lopts').innerHTML = '';
+    optsFor(step).forEach((o, k) => {
+      const b = document.createElement('button');
+      b.className = 'ta lo';
+      const em = document.createElement('span'); em.className = 'le'; em.setAttribute('aria-hidden', 'true'); em.textContent = o.e;
+      const tx = document.createElement('span'); tx.className = 'lt';
+      const bt = document.createElement('b'); bt.textContent = o.t;
+      const sm = document.createElement('small'); sm.textContent = o.s;
+      tx.append(bt, sm); b.append(em, tx);
+      b.onclick = () => pickL(b, k);
+      $('lopts').appendChild(b);
+    });
+    lLock = false;
+  }
+  function pickL(b, k) {
+    if (lLock) return; lLock = true;
+    ch[step] = k; b.classList.add('right');
+    tone(500 + step * 90, .1, 'triangle'); buzz(15);
+    setTimeout(() => {
+      step++;
+      if (step < 4) { renderStep(); $('h-game').focus({ preventScroll:true }); }
+      else launch();
+    }, 380);
+  }
+  function startPlan() {
+    ch = []; step = 0;
+    $('lpick').hidden = false; $('llaunch').hidden = true; $('lresult').hidden = true;
+    renderStep();
+  }
+  function launch() {
+    st.tries++;
+    const r = sim(ch);
+    $('lpick').hidden = true; $('llaunch').hidden = false;
+    $('shop').textContent = PROD[ch[0]].e;
+    $('h-launch').focus({ preventScroll:true });
+    say('Launch day! Customers are arriving.');
+    const crowd = $('crowd'); crowd.innerHTML = '';
+    const ppl = ['🧑','👧','👦','👩','👨','🙋','🧒'];
+    const dur = RM ? 200 : 3200, n = Math.min(r.cust, 22);
+    if (!RM) for (let i = 0; i < n; i++) setTimeout(() => {
+      const c = document.createElement('span'); c.className = 'cust'; c.textContent = ppl[i % ppl.length];
+      c.style.top = (8 + Math.random() * 44) + 'px'; crowd.appendChild(c);
+      tone(900 + (i % 5) * 80, .03, 'square', .02);
+      setTimeout(() => c.remove(), 1300);
+    }, i * (dur - 1100) / Math.max(1, n));
+    const t0 = performance.now();
+    (function roll() {
+      const p = Math.min(1, (performance.now() - t0) / dur), e = 1 - Math.pow(1 - p, 3);
+      $('lc').textContent = Math.round(r.cust * e); $('lr').textContent = Math.round(r.rev * e);
+      if (p < 1) requestAnimationFrame(roll); else setTimeout(() => results(r), 350);
+    })();
+  }
+  function results(r) {
+    st.best = Math.max(st.best, Math.max(0, r.profit));
+    $('llaunch').hidden = true; $('lresult').hidden = false;
+    const neg = r.profit < 0;
+    $('lprofit').textContent = (neg ? '−$' : '$') + Math.abs(r.profit);
+    $('lprofit').classList.toggle('loss', neg);
+    $('rc').textContent = r.cust; $('rr').textContent = '$' + r.rev; $('rk').textContent = '$' + r.costs;
+    const sv = starsFor(ch);
+    $('stars').innerHTML = '';
+    sv.forEach((n, d) => {
+      const row = document.createElement('div'); row.className = 'srow';
+      const l = document.createElement('span'); l.textContent = STEPS[d].p;
+      const v = document.createElement('span'); v.textContent = '⭐'.repeat(n) + '☆'.repeat(3 - n);
+      v.setAttribute('aria-label', `${n} of 3 stars`);
+      row.append(l, v); $('stars').appendChild(row);
+    });
+    const low = Math.min(...sv);
+    $('tip').textContent = low === 3 ? 'Perfect strategy! 🏆 You nailed all 4 Ps.' : '💡 ' + TIPS[sv.indexOf(low)];
+    $('again').hidden = low === 3;   // keep trying until all 4 Ps are perfect; best profit counts
+    if (neg) { tone(150, .3, 'sawtooth', .05); } else { fanfare(); confetti(r.profit > 300 ? 90 : 40); }
+    say(`${neg ? 'Loss of' : 'Profit:'} ${Math.abs(r.profit)} dollars. ${r.cust} customers. ${$('tip').textContent}`);
+    setTimeout(() => $('h-res').focus({ preventScroll:true }), 50);
+  }
+  $('again').onclick = () => { tone(700); startPlan(); $('h-game').focus({ preventScroll:true }); };
 
   /* ---------- badge ---------- */
   function makeCode() {
@@ -635,11 +727,11 @@ h2{font-size:28px;line-height:1.15}
     return st.dir + '-' + s;
   }
   function save() {
-    try { localStorage.setItem(KEY, JSON.stringify({ name:st.name, first:st.first, dir:st.dir, best:st.best, bonus:st.bonus, triv:st.triv, code:st.code, claimed:st.claimed, claimedAt:st.claimedAt })); } catch (e) {}
+    try { store && store.setItem(KEY, JSON.stringify({ name:st.name, first:st.first, dir:st.dir, best:st.best, bonus:st.bonus, triv:st.triv, code:st.code, claimed:st.claimed, claimedAt:st.claimedAt })); } catch (e) {}
   }
   // in-progress save so a reload (e.g. after visiting an ABAC page) resumes trivia
   function saveProg() {
-    try { localStorage.setItem(KEY, JSON.stringify({ stage:'trivia', ti, tMiss, name:st.name, first:st.first, dir:st.dir, pts:st.pts, best:st.best, tries:st.tries, bonus:st.bonus, triv:st.triv })); } catch (e) {}
+    try { store && store.setItem(KEY, JSON.stringify({ stage:'trivia', ti, tMiss, name:st.name, first:st.first, dir:st.dir, pts:st.pts, best:st.best, tries:st.tries, bonus:st.bonus, triv:st.triv })); } catch (e) {}
   }
 
   /* ---------- trivia ---------- */
@@ -652,6 +744,7 @@ h2{font-size:28px;line-height:1.15}
     $('tfind').href = t.u;
     $('tfind').setAttribute('aria-label', `Find it here: opens the ${t.s} in a new tab`);
     $('tsrc').textContent = 'Hint: ' + t.s;
+    $('tfind').setAttribute('aria-label', `Find it here: opens an ABAC page in a new tab`);
     $('tbonus').textContent = '';
     $('tans').innerHTML = '';
     t.a.forEach((txt, k) => {
@@ -682,7 +775,7 @@ h2{font-size:28px;line-height:1.15}
       else { tDone = true; $('tprog').style.width = '100%'; claim(); }
     }, 900);
   }
-  function load() { try { return JSON.parse(localStorage.getItem(KEY) || 'null'); } catch (e) { return null; } }
+  function load() { try { return JSON.parse((store && store.getItem(KEY)) || 'null'); } catch (e) { return null; } }
   function renderBadge() {
     const d = DIRS[st.dir] || DIRS.N, t = TIERS(total());
     $('badge').className = 'badge ' + t.k;
