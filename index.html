@@ -1,0 +1,744 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0b1a33">
+<meta name="description" content="Spin the Business Career Compass, play Profit Rush, and earn a prize badge. ABAC Bainbridge, Stafford School of Business.">
+<title>Business Career Compass · ABAC Bainbridge</title>
+<style>
+:root{
+  --navy:#0b1a33;--navy2:#13284d;--navy3:#1d3a6b;
+  --gold:#f2c14e;--gold2:#ffd97a;--ink:#f5f1e6;--muted:#c3cbdb;
+  --red:#ff7a7a;--green:#5ee08f;--card:rgba(255,255,255,.07);--line:rgba(242,193,78,.4);
+  --serif:Georgia,"Times New Roman",serif;
+  --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{min-height:100%}
+body{
+  background:radial-gradient(circle at 50% -10%,#2a5191 0,var(--navy) 62%) fixed,var(--navy);
+  color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  -webkit-tap-highlight-color:transparent;overflow-x:hidden;line-height:1.35;
+}
+body::before{
+  content:"";position:fixed;inset:0;pointer-events:none;opacity:.55;
+  background-image:
+    radial-gradient(1.5px 1.5px at 12% 18%,#fff 50%,transparent 51%),
+    radial-gradient(1.5px 1.5px at 78% 12%,#ffd97a 50%,transparent 51%),
+    radial-gradient(1px 1px at 40% 70%,#fff 50%,transparent 51%),
+    radial-gradient(1.5px 1.5px at 88% 64%,#fff 50%,transparent 51%),
+    radial-gradient(1px 1px at 22% 88%,#ffd97a 50%,transparent 51%),
+    radial-gradient(1px 1px at 60% 35%,#fff 50%,transparent 51%),
+    radial-gradient(1.5px 1.5px at 5% 55%,#fff 50%,transparent 51%);
+}
+button{font:inherit;color:inherit;cursor:pointer;border:0;background:none;touch-action:manipulation}
+:focus-visible{outline:3px solid var(--gold2);outline-offset:3px;border-radius:10px}
+[hidden]{display:none!important}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* screens */
+.screen{display:none;min-height:100vh;min-height:100dvh;max-width:480px;margin:0 auto;
+  padding:64px 16px 32px;flex-direction:column;align-items:center;justify-content:center;gap:16px;text-align:center}
+.screen.active{display:flex;animation:in .45s ease both}
+@keyframes in{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+h1,h2,h3{font-family:var(--serif);outline:none}
+h1{font-size:40px;line-height:1.05}
+h1 span{color:var(--gold);display:block;font-size:46px}
+h2{font-size:28px;line-height:1.15}
+.brand{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);font-weight:700}
+.sub{color:var(--muted);font-size:17px}
+
+/* buttons */
+.btn{background:linear-gradient(180deg,var(--gold2),var(--gold));color:var(--navy);font-weight:800;font-size:20px;
+  padding:16px 28px;border-radius:999px;min-width:220px;box-shadow:0 6px 0 #b8871f,0 10px 24px rgba(0,0,0,.35);
+  transition:transform .1s,box-shadow .1s}
+.btn:active{transform:translateY(4px);box-shadow:0 2px 0 #b8871f,0 4px 10px rgba(0,0,0,.35)}
+.btn:disabled{opacity:.6}
+.btn.ghost{background:transparent;color:var(--gold);box-shadow:none;border:2px solid var(--line);font-size:17px;padding:12px 22px}
+.sound{position:fixed;top:12px;right:12px;z-index:20;width:44px;height:44px;border-radius:50%;
+  background:rgba(255,255,255,.1);font-size:20px;border:1px solid var(--line)}
+
+/* name input */
+.lbl{font-weight:700;font-size:15px;color:var(--gold2);margin-top:4px}
+.names{display:grid;grid-template-columns:1fr 1fr;gap:10px;width:100%;max-width:340px}
+.names div{display:flex;flex-direction:column;gap:6px}
+.nmi{width:100%;font-size:19px;text-align:center;padding:13px 8px;border-radius:16px;
+  border:2px solid var(--line);background:rgba(255,255,255,.08);color:var(--ink);font-weight:700}
+.nmi::placeholder{color:#97a3bb;font-weight:400}
+.nmi:focus{outline:none;border-color:var(--gold2);box-shadow:0 0 0 4px rgba(242,193,78,.25)}
+.shake{animation:shake .4s}
+@keyframes shake{20%,60%{transform:translateX(-8px)}40%,80%{transform:translateX(8px)}}
+
+/* compass */
+.compass{position:relative;width:240px;height:240px}
+.compass.small{width:150px;height:150px}
+.compass svg{width:100%;height:100%;display:block}
+.needle{position:absolute;inset:0;transform:rotate(-35deg)}
+.small .needle{animation:wobble 2.4s ease-in-out infinite}
+@keyframes wobble{0%,100%{transform:rotate(-25deg)}50%{transform:rotate(30deg)}}
+.glow{filter:drop-shadow(0 0 18px rgba(242,193,78,.45))}
+
+/* quiz */
+.prog{width:100%;height:10px;background:rgba(255,255,255,.1);border-radius:99px;overflow:hidden}
+#progbar{height:100%;width:0;background:linear-gradient(90deg,var(--gold),var(--gold2));border-radius:99px;transition:width .4s}
+.qcount{font-family:var(--mono);color:var(--gold);font-size:14px;letter-spacing:.1em}
+#qtext{min-height:2.4em;display:flex;align-items:center;justify-content:center}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:16px;width:100%;position:relative;margin-top:6px}
+.opt{background:var(--card);border:2px solid rgba(255,255,255,.14);border-radius:24px;min-height:180px;padding:16px 10px;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;
+  transition:transform .2s,opacity .2s,background .2s,border-color .2s}
+.opt:active{transform:scale(.96)}
+.opt .em{font-size:56px;line-height:1}
+.opt .tx{font-weight:800;font-size:18px}
+.opt.picked{background:rgba(242,193,78,.22);border-color:var(--gold);transform:scale(1.05)}
+.opt.faded{opacity:.3;transform:scale(.93)}
+.or{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:42px;height:42px;border-radius:50%;
+  background:var(--navy);border:2px solid var(--gold);color:var(--gold);font-weight:900;font-size:13px;
+  display:grid;place-items:center;pointer-events:none}
+
+/* result */
+.result{width:100%;display:flex;flex-direction:column;align-items:center;gap:12px;animation:in .5s ease both}
+.r-dir{font-family:var(--mono);color:var(--gold);letter-spacing:.3em;font-size:14px;font-weight:700}
+#r-title{font-size:34px}
+.r-field{color:var(--muted);font-size:17px;font-weight:600}
+.chips{list-style:none;display:flex;flex-wrap:wrap;justify-content:center;gap:8px}
+.chips li{background:rgba(242,193,78,.14);border:1px solid var(--line);padding:8px 14px;border-radius:99px;font-weight:700;font-size:15px}
+.bars{width:100%;max-width:300px;display:grid;gap:6px}
+.bar{display:grid;grid-template-columns:44px 1fr;align-items:center;gap:8px;font-size:15px}
+.bar .tr{height:12px;background:rgba(255,255,255,.1);border-radius:99px;overflow:hidden}
+.bar .fl{height:100%;background:var(--muted);border-radius:99px;width:0;transition:width .8s ease}
+.bar.win .fl{background:linear-gradient(90deg,var(--gold),var(--gold2))}
+.r-abac{font-size:16px;background:rgba(255,255,255,.06);border-radius:14px;padding:10px 14px}
+.r-abac b{color:var(--gold2)}
+
+/* game */
+.howto{display:flex;flex-direction:column;gap:14px;align-items:center}
+.rules{display:grid;grid-template-columns:1fr 1fr;gap:12px;width:100%}
+.rule{background:var(--card);border-radius:18px;padding:14px 8px;font-weight:800;font-size:17px}
+.rule .big{font-size:34px;display:block;margin-bottom:4px;letter-spacing:4px}
+.rule.bad{border:2px solid rgba(255,122,122,.5)}
+.rule.good{border:2px solid rgba(94,224,143,.5)}
+.tiers{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;font-size:15px;font-weight:700}
+.tiers span{background:rgba(255,255,255,.08);padding:6px 10px;border-radius:99px}
+.hud{display:flex;justify-content:space-between;width:100%;font-family:var(--mono);font-size:22px;font-weight:700}
+.hud b{color:var(--gold2)}
+.timebar{width:100%;height:10px;background:rgba(255,255,255,.1);border-radius:99px;overflow:hidden}
+#tb{height:100%;background:linear-gradient(90deg,var(--green),var(--gold));transform-origin:left;border-radius:99px}
+.play{width:100%;display:flex;flex-direction:column;gap:12px;align-items:center}
+.play.hurt{animation:shake .3s}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;width:100%;max-width:360px}
+.cell{aspect-ratio:1;border-radius:22px;background:radial-gradient(circle at 50% 70%,#0a1428,#1a3561);
+  border:2px solid rgba(255,255,255,.1);position:relative;overflow:visible;display:grid;place-items:center;
+  box-shadow:inset 0 -8px 0 rgba(0,0,0,.25);transition:background .15s}
+.cell .it{font-size:46px;line-height:1;transform:scale(0) translateY(20px);transition:transform .14s ease-out}
+.cell.up .it{transform:scale(1) translateY(0)}
+.cell.up{border-color:rgba(242,193,78,.55)}
+.cell.up.bad{border-color:rgba(255,122,122,.7);background:radial-gradient(circle at 50% 70%,#2a0f18,#4a1a28)}
+.float{position:absolute;left:50%;top:10%;transform:translateX(-50%);font-weight:900;font-size:22px;color:var(--green);
+  pointer-events:none;animation:up .7s ease-out forwards;text-shadow:0 2px 6px #000;white-space:nowrap}
+.float.neg{color:var(--red)}
+@keyframes up{to{transform:translate(-50%,-48px);opacity:0}}
+.go-big{font-family:var(--serif);font-size:64px;color:var(--gold2);font-weight:700;line-height:1}
+.go-tier{font-size:22px;font-weight:800}
+.gameover{display:flex;flex-direction:column;gap:14px;align-items:center}
+
+/* badge */
+.badge{--t:var(--gold);position:relative;width:min(340px,100%);padding:22px 18px 18px;border-radius:28px;overflow:hidden;
+  background:linear-gradient(160deg,#24477f,#0b1a33 72%);border:3px solid var(--t);
+  box-shadow:0 0 0 6px rgba(0,0,0,.25),0 0 44px rgba(242,193,78,.35)}
+.badge.silver{--t:#dbe2ec;box-shadow:0 0 0 6px rgba(0,0,0,.25),0 0 44px rgba(219,226,236,.3)}
+.badge.bronze{--t:#e8a066;box-shadow:0 0 0 6px rgba(0,0,0,.25),0 0 44px rgba(232,160,102,.3)}
+.holo{position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(115deg,transparent 30%,rgba(255,255,255,.2) 44%,rgba(242,193,78,.2) 50%,rgba(96,165,250,.15) 56%,transparent 68%);
+  background-size:260% 100%;animation:holo 3s linear infinite}
+@keyframes holo{from{background-position:160% 0}to{background-position:-110% 0}}
+.b-top{font-size:11px;letter-spacing:.16em;font-weight:800;color:var(--t)}
+.b-sub{font-family:var(--serif);font-size:18px;margin-top:2px}
+.b-medal{width:118px;height:118px;margin:18px auto 12px;border-radius:50%;display:grid;place-items:center;font-size:58px;
+  background:radial-gradient(circle,#2a5191,#0b1a33);border:4px solid var(--t);position:relative}
+.b-medal::after{content:"";position:absolute;inset:-12px;border-radius:50%;border:2px dashed var(--t);animation:spin 14s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.b-tier{display:inline-block;background:var(--t);color:var(--navy);font-weight:900;letter-spacing:.14em;font-size:14px;padding:5px 14px;border-radius:99px}
+.b-name{font-family:var(--serif);font-size:27px;line-height:1.15;font-weight:700;margin-top:10px;word-break:break-word}
+.b-arch{color:var(--gold2);font-weight:700;font-size:17px}
+.b-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px}
+.b-stats div{background:rgba(255,255,255,.07);border-radius:14px;padding:8px}
+.b-stats small{display:block;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.b-stats b{font-size:17px}
+.b-code{font-family:var(--mono);margin-top:12px;font-size:14px;color:var(--muted)}
+.b-code b{color:var(--ink);font-size:18px;letter-spacing:.12em}
+.live{font-family:var(--mono);font-size:13px;color:var(--green);margin-top:6px;font-weight:700}
+.dot{display:inline-block;width:9px;height:9px;border-radius:50%;background:var(--green);margin-right:4px;animation:pulse 1s ease-in-out infinite}
+@keyframes pulse{50%{opacity:.25;transform:scale(.7)}}
+.stamp{position:absolute;left:50%;top:27%;transform:translate(-50%,-50%) rotate(-14deg);border:4px solid var(--red);color:var(--red);
+  background:rgba(11,26,51,.88);font-weight:900;font-size:24px;letter-spacing:.08em;padding:8px 14px;border-radius:10px;line-height:1.1;
+  animation:stampin .35s cubic-bezier(.2,1.6,.4,1) both}
+.stamp small{display:block;font-size:12px;letter-spacing:.1em}
+@keyframes stampin{from{transform:translate(-50%,-50%) rotate(-14deg) scale(2.2);opacity:0}}
+.claim{font-size:19px;font-weight:800}
+.hold{position:relative;overflow:hidden;font-size:13px;color:var(--muted);border:1px dashed rgba(255,255,255,.3);
+  padding:10px 14px;border-radius:12px;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none;touch-action:none}
+.hold::after{content:"";position:absolute;inset:0;background:rgba(255,122,122,.35);transform:scaleX(0);transform-origin:left;transition:transform .15s}
+.hold.holding::after{transform:scaleX(1);transition:transform 2s linear}
+.link{color:var(--gold2);font-weight:700;font-size:15px}
+
+/* trivia */
+.find{display:inline-flex;align-items:center;gap:8px;background:rgba(96,165,250,.16);border:2px solid rgba(96,165,250,.55);
+  color:#cfe3ff;font-weight:800;font-size:16px;padding:10px 16px;border-radius:99px;text-decoration:none}
+.tq-src{font-size:13px;color:var(--muted)}
+.tans{display:grid;gap:10px;width:100%}
+.ta{background:var(--card);border:2px solid rgba(255,255,255,.14);border-radius:18px;padding:16px;font-weight:800;font-size:18px;
+  transition:background .2s,border-color .2s,opacity .2s}
+.ta.right{background:rgba(94,224,143,.22);border-color:var(--green)}
+.ta.wrong{background:rgba(255,122,122,.15);border-color:var(--red);opacity:.55;animation:shake .35s}
+.ta:disabled{cursor:default}
+.ta{position:relative}
+.tbonus{font-family:var(--mono);color:var(--green);font-weight:700;min-height:1.4em}
+
+#fx{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:30}
+
+@media (max-width:360px){h1{font-size:34px}h1 span{font-size:40px}.opt{min-height:150px}.opt .em{font-size:46px}.compass{width:210px;height:210px}}
+@media (max-height:720px){
+  #s-badge{padding-top:52px;gap:10px}
+  .badge{padding:16px 14px 14px}
+  .b-medal{width:78px;height:78px;font-size:40px;margin:12px auto 8px;border-width:3px}
+  .b-medal::after{inset:-8px}
+  .b-name{font-size:23px;margin-top:6px}
+  .b-arch{font-size:15px}
+  .b-stats div{padding:6px 4px}
+  .b-code{margin-top:8px}
+  .claim{font-size:17px}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+}
+</style>
+</head>
+<body>
+<button class="sound" id="snd" aria-pressed="true" aria-label="Sound on">🔊</button>
+<canvas id="fx" aria-hidden="true"></canvas>
+<div id="live" class="sr" aria-live="polite"></div>
+
+<!-- START -->
+<section id="s-start" class="screen active" aria-labelledby="h-start">
+  <p class="brand">ABAC Bainbridge · Stafford School of Business</p>
+  <div class="compass small glow" aria-hidden="true">
+    <svg viewBox="0 0 200 200"><use href="#dial"/></svg>
+    <div class="needle"><svg viewBox="0 0 200 200"><use href="#ndl"/></svg></div>
+  </div>
+  <h1 id="h-start" tabindex="-1">Business <span>Career Compass</span></h1>
+  <p class="sub">8 taps · 1 game · 5 trivia · 1 prize 🎁</p>
+  <div class="names">
+    <div><label for="nm" class="lbl">First name</label>
+    <input id="nm" class="nmi" maxlength="20" autocomplete="given-name" autocapitalize="words" placeholder="First" enterkeyhint="next"></div>
+    <div><label for="ln" class="lbl">Last name</label>
+    <input id="ln" class="nmi" maxlength="24" autocomplete="family-name" autocapitalize="words" placeholder="Last" enterkeyhint="go"></div>
+  </div>
+  <button class="btn" id="go">Let's go 🧭</button>
+</section>
+
+<!-- QUIZ -->
+<section id="s-quiz" class="screen" aria-labelledby="qtext">
+  <div class="prog" aria-hidden="true"><div id="progbar"></div></div>
+  <p class="qcount" id="qcount">1 / 8</p>
+  <h2 id="qtext" tabindex="-1"></h2>
+  <div class="opts">
+    <button class="opt" id="o0"><span class="em" aria-hidden="true"></span><span class="tx"></span></button>
+    <button class="opt" id="o1"><span class="em" aria-hidden="true"></span><span class="tx"></span></button>
+    <span class="or" aria-hidden="true">OR</span>
+  </div>
+</section>
+
+<!-- SPIN -->
+<section id="s-spin" class="screen" aria-labelledby="h-spin">
+  <h2 id="h-spin" tabindex="-1">Your compass is ready!</h2>
+  <div class="compass glow" aria-hidden="true">
+    <svg viewBox="0 0 200 200"><use href="#dial"/></svg>
+    <div class="needle" id="needle"><svg viewBox="0 0 200 200"><use href="#ndl"/></svg></div>
+  </div>
+  <button class="btn" id="spinbtn">Spin it! 🌀</button>
+  <div id="result" class="result" hidden>
+    <p class="r-dir" id="r-dir"></p>
+    <h3 id="r-title" tabindex="-1"><span id="r-em" aria-hidden="true"></span> <span id="r-name"></span></h3>
+    <p class="r-field" id="r-field"></p>
+    <ul class="chips" id="r-jobs" aria-label="Careers to explore"></ul>
+    <div class="bars" id="r-bars"></div>
+    <p class="r-abac">🎓 Every direction starts with a <b>BS in Business</b> at ABAC Bainbridge</p>
+    <button class="btn" id="toGame">Earn your badge 💰</button>
+  </div>
+</section>
+
+<!-- GAME -->
+<section id="s-game" class="screen" aria-labelledby="h-game">
+  <h2 id="h-game" tabindex="-1">Profit Rush 💰</h2>
+  <div class="howto" id="howto">
+    <div class="rules">
+      <div class="rule good"><span class="big" aria-hidden="true">🪙💵💎</span>TAP = profit</div>
+      <div class="rule bad"><span class="big" aria-hidden="true">🧾</span>Bills = −$20</div>
+    </div>
+    <div class="tiers" aria-label="Badge levels: game cash plus trivia bonus. Bronze, Silver at 200 dollars, Gold at 350 dollars"><span>🥉 Bronze</span><span>🥈 $200</span><span>🥇 $350</span></div>
+    <p class="sub" style="font-size:14px">Game cash + trivia bonus = your badge</p>
+    <button class="btn" id="startGame">Start! ⏱ 20 sec</button>
+  </div>
+  <div class="play" id="play" hidden>
+    <div class="hud" aria-hidden="true"><span>💰 $<b id="score">0</b></span><span>⏱ <b id="time">20</b></span></div>
+    <div class="timebar" aria-hidden="true"><div id="tb"></div></div>
+    <div class="grid" id="grid" role="group" aria-label="Profit Rush board"></div>
+  </div>
+  <div class="gameover" id="gameover" hidden>
+    <p class="go-big">$<span id="go-score">0</span></p>
+    <p class="go-tier" id="go-tier"></p>
+    <button class="btn" id="claimBtn">Bonus round 🐎</button>
+    <button class="btn ghost" id="again">One more try 🔁</button>
+  </div>
+</section>
+
+<!-- TRIVIA -->
+<section id="s-trivia" class="screen" aria-labelledby="tq">
+  <p class="brand">🐎 Bonus Round · ABAC Trivia</p>
+  <div class="prog" aria-hidden="true"><div id="tprog" style="height:100%;width:0;background:linear-gradient(90deg,#60a5fa,var(--green));border-radius:99px;transition:width .4s"></div></div>
+  <p class="qcount" id="tcount">1 / 5</p>
+  <h2 id="tq" tabindex="-1"></h2>
+  <a class="find" id="tfind" href="#" target="_blank" rel="noopener">🔎 Find it here <span aria-hidden="true">↗</span></a>
+  <p class="tq-src" id="tsrc"></p>
+  <div class="tans" id="tans"></div>
+  <p class="tbonus" id="tbonus" aria-hidden="true"></p>
+</section>
+
+<!-- BADGE -->
+<section id="s-badge" class="screen" aria-labelledby="h-badge">
+  <h2 id="h-badge" class="sr" tabindex="-1">Your prize badge</h2>
+  <div class="badge" id="badge">
+    <div class="holo" aria-hidden="true"></div>
+    <p class="b-top">ABAC · STAFFORD SCHOOL OF BUSINESS</p>
+    <p class="b-sub">Business Career Compass</p>
+    <div class="b-medal" aria-hidden="true"><span id="b-em"></span></div>
+    <span class="b-tier" id="b-tier"></span>
+    <p class="b-name" id="b-name"></p>
+    <p class="b-arch" id="b-arch"></p>
+    <div class="b-stats">
+      <div><small>Direction</small><b id="b-dir"></b></div>
+      <div><small>Profit</small><b id="b-score"></b></div>
+      <div><small>Trivia</small><b id="b-triv"></b></div>
+    </div>
+    <p class="b-code">CODE <b id="b-code"></b></p>
+    <p class="live"><span class="dot" aria-hidden="true"></span>LIVE <span id="clock"></span></p>
+    <div class="stamp" id="stamp" hidden>PRIZE CLAIMED<small id="stampTime"></small></div>
+  </div>
+  <p class="claim" id="claimText">Show this to claim your prize 🎁</p>
+  <button class="hold" id="hold">Presenter: press &amp; hold 2 sec to mark claimed</button>
+  <a class="link" href="https://www.abac.edu" target="_blank" rel="noopener">Explore ABAC <span aria-hidden="true">↗</span></a>
+</section>
+
+<!-- shared SVG symbols -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <radialGradient id="cg"><stop offset="0" stop-color="#24477f"/><stop offset="1" stop-color="#0b1a33"/></radialGradient>
+    <g id="dial">
+      <circle cx="100" cy="100" r="95" fill="url(#cg)" stroke="#f2c14e" stroke-width="5"/>
+      <circle cx="100" cy="100" r="78" fill="none" stroke="rgba(242,193,78,.4)" stroke-width="1.5" stroke-dasharray="2 6"/>
+      <g stroke="#f2c14e" stroke-width="2" opacity=".6">
+        <line x1="100" y1="8" x2="100" y2="18"/><line x1="100" y1="182" x2="100" y2="192"/>
+        <line x1="8" y1="100" x2="18" y2="100"/><line x1="182" y1="100" x2="192" y2="100"/>
+      </g>
+      <g font-family="Georgia,serif" font-weight="700" font-size="20" fill="#f2c14e" text-anchor="middle">
+        <text x="100" y="40">N</text><text x="166" y="107">E</text><text x="100" y="174">S</text><text x="34" y="107">W</text>
+      </g>
+      <g font-size="15" text-anchor="middle">
+        <text x="100" y="60">⭐</text><text x="143" y="106">⚡</text><text x="100" y="152">📊</text><text x="57" y="106">🚀</text>
+      </g>
+    </g>
+    <g id="ndl">
+      <polygon points="100,20 111,100 100,110 89,100" fill="#ff7a7a"/>
+      <polygon points="100,180 111,100 100,90 89,100" fill="#f5f1e6"/>
+      <circle cx="100" cy="100" r="9" fill="#f2c14e" stroke="#0b1a33" stroke-width="3"/>
+    </g>
+  </defs>
+</svg>
+
+<script>
+(() => {
+  const $ = id => document.getElementById(id);
+  const KEY = 'abac-career-compass-v1';
+  const RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (/[?&]reset/.test(location.search)) { try { localStorage.removeItem(KEY); } catch (e) {} }
+
+  const DIRS = {
+    N: { word:'NORTH', name:'The Captain',     em:'⭐', field:'Management & Leadership', jobs:['Operations Manager','HR Manager','Sales Manager'] },
+    E: { word:'EAST',  name:'The Spark',       em:'⚡', field:'Marketing & Sales',       jobs:['Brand Manager','Social Media Strategist','Event Marketer'] },
+    S: { word:'SOUTH', name:'The Strategist',  em:'📊', field:'Finance & Accounting',    jobs:['Financial Analyst','Accountant','Banker'] },
+    W: { word:'WEST',  name:'The Trailblazer', em:'🚀', field:'Entrepreneurship',        jobs:['Startup Founder','Small Business Owner','Agribusiness Owner'] }
+  };
+  const ANG = { N:0, E:90, S:180, W:270 };
+  const Q = [
+    { q:'Friday night, you’d rather…',        o:[{e:'🎉',t:'Plan the party',d:'N'},{e:'🎨',t:'Design the flyer',d:'E'}] },
+    { q:'Group project — you grab…',           o:[{e:'📊',t:'The budget',d:'S'},{e:'💡',t:'The wild idea',d:'W'}] },
+    { q:'Your secret superpower?',             o:[{e:'🧭',t:'Leading people',d:'N'},{e:'🧮',t:'Crunching numbers',d:'S'}] },
+    { q:'Your camera roll is full of…',        o:[{e:'📸',t:'Edits & content',d:'E'},{e:'🚀',t:'Side-hustle ideas',d:'W'}] },
+    { q:'Dream job title?',                    o:[{e:'👔',t:'The Boss',d:'N'},{e:'🏗️',t:'The Founder',d:'W'}] },
+    { q:'Scrolling, you notice…',              o:[{e:'📣',t:'Clever ads',d:'E'},{e:'💸',t:'What stuff costs',d:'S'}] },
+    { q:'A local shop is struggling. You…',    o:[{e:'🤝',t:'Coach the team',d:'N'},{e:'📱',t:'Make it go viral',d:'E'}] },
+    { q:'Got $100 birthday cash?',             o:[{e:'🏦',t:'Save & grow it',d:'S'},{e:'🛒',t:'Buy, resell, profit',d:'W'}] }
+  ];
+  const TIERS = s => s >= 350 ? {k:'gold',l:'GOLD',e:'🥇'} : s >= 200 ? {k:'silver',l:'SILVER',e:'🥈'} : {k:'bronze',l:'BRONZE',e:'🥉'};
+
+  const BIZ = 'https://www.abac.edu/academics/schools/business/index.html';
+  const BAIN = 'https://www.abac.edu/academics/bainbridge.html';
+  const TRIVIA = [
+    { q:'ABAC has the ONLY one of these in Georgia:', u:BIZ, s:'Stafford School of Business page',
+      a:['Bachelor of Science in Business','Bachelor of Business Analytics','Business Esports degree'], c:0 },
+    { q:'Business majors must complete at least one internship worth…', u:BIZ, s:'Stafford School of Business page',
+      a:['1 credit','3 credits','12 credits'], c:1 },
+    { q:'How many acres of oak & pine is ABAC Bainbridge?', u:BAIN, s:'ABAC Bainbridge page',
+      a:['17','1,730','173'], c:2 },
+    { q:'You can dual enroll at ABAC Bainbridge after finishing which grade?', u:BAIN, s:'ABAC Bainbridge page',
+      a:['10th grade','11th grade','12th grade'], c:0 },
+    { q:'Which ABAC professor was just named NBEA Southern Region Collegiate Teacher of the Year?', u:BAIN, s:'ABAC Bainbridge page · Bainbridge News',
+      a:['Dr. Abul Sheikh','Tatyana Pashnyak','Dr. Diantha Ellis'], c:1 }
+  ];
+  const BONUS = 30;
+
+  const st = { name:'', first:'', pts:{N:0,E:0,S:0,W:0}, dir:null, best:0, tries:0, bonus:0, triv:0, code:'', claimed:false, claimedAt:'' };
+  const total = () => st.best + st.bonus;
+
+  /* ---------- helpers ---------- */
+  const say = t => { const l = $('live'); l.textContent = ''; setTimeout(() => { l.textContent = t; }, 60); };
+  let ac = null, soundOn = true;
+  function tone(f, d = .08, type = 'sine', vol = .08, delay = 0) {
+    if (!soundOn) return;
+    try {
+      ac = ac || new (window.AudioContext || window.webkitAudioContext)();
+      const t = ac.currentTime + delay, o = ac.createOscillator(), g = ac.createGain();
+      o.type = type; o.frequency.setValueAtTime(f, t);
+      g.gain.setValueAtTime(vol, t); g.gain.exponentialRampToValueAtTime(.0001, t + d);
+      o.connect(g); g.connect(ac.destination); o.start(t); o.stop(t + d + .02);
+    } catch (e) {}
+  }
+  const fanfare = () => [523,659,784,1047].forEach((f,i) => tone(f, .18, 'triangle', .09, i * .11));
+  const buzz = p => { try { navigator.vibrate && navigator.vibrate(p); } catch (e) {} };
+  function show(id) {
+    document.querySelectorAll('.screen').forEach(s => s.classList.toggle('active', s.id === id));
+    window.scrollTo(0, 0);
+    const h = $(id).querySelector('[tabindex="-1"]');
+    if (h) setTimeout(() => h.focus({ preventScroll:true }), 30);
+  }
+  $('snd').onclick = () => {
+    soundOn = !soundOn;
+    $('snd').textContent = soundOn ? '🔊' : '🔇';
+    $('snd').setAttribute('aria-pressed', soundOn);
+    $('snd').setAttribute('aria-label', soundOn ? 'Sound on' : 'Sound off');
+    if (soundOn) tone(660);
+  };
+
+  /* ---------- confetti ---------- */
+  const cv = $('fx'), cx = cv.getContext('2d'); let parts = [], raf = 0;
+  const dpr = () => window.devicePixelRatio || 1;
+  function size() { cv.width = innerWidth * dpr(); cv.height = innerHeight * dpr(); }
+  addEventListener('resize', size); size();
+  function confetti(n = 90) {
+    if (RM) return;
+    const cols = ['#f2c14e','#ffd97a','#ff7a7a','#5ee08f','#60a5fa','#f5f1e6'], k = dpr();
+    for (let i = 0; i < n; i++) parts.push({ x:cv.width/2, y:cv.height*.35, vx:(Math.random()-.5)*16*k, vy:(-Math.random()*13-4)*k,
+      s:(5+Math.random()*6)*k, c:cols[i%cols.length], r:Math.random()*6, vr:(Math.random()-.5)*.35, life:0 });
+    if (!raf) loop();
+  }
+  function loop() {
+    const k = dpr();
+    cx.clearRect(0, 0, cv.width, cv.height);
+    parts.forEach(p => {
+      p.vy += .38 * k; p.x += p.vx; p.y += p.vy; p.vx *= .985; p.r += p.vr; p.life++;
+      cx.save(); cx.translate(p.x, p.y); cx.rotate(p.r); cx.fillStyle = p.c; cx.fillRect(-p.s/2, -p.s/4, p.s, p.s/2); cx.restore();
+    });
+    parts = parts.filter(p => p.y < cv.height + 40 && p.life < 320);
+    raf = parts.length ? requestAnimationFrame(loop) : 0;
+    if (!raf) cx.clearRect(0, 0, cv.width, cv.height);
+  }
+
+  /* ---------- start ---------- */
+  $('go').onclick = () => {
+    const f = $('nm').value.trim().replace(/\s+/g, ' '), l = $('ln').value.trim().replace(/\s+/g, ' ');
+    const miss = !f ? $('nm') : !l ? $('ln') : null;
+    if (miss) {
+      miss.classList.remove('shake'); void miss.offsetWidth; miss.classList.add('shake'); miss.focus();
+      say(!f ? 'Please type your first name.' : 'Please type your last name.'); tone(200, .15, 'square', .04); return;
+    }
+    st.first = f.slice(0, 20); st.name = st.first + ' ' + l.slice(0, 24);
+    st.pts = {N:0,E:0,S:0,W:0}; qi = 0;
+    tone(660, .08); tone(880, .12, 'sine', .08, .09);
+    renderQ(); show('s-quiz');
+  };
+  $('nm').addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); $('ln').focus(); } });
+  $('ln').addEventListener('keydown', e => { if (e.key === 'Enter') $('go').click(); });
+
+  /* ---------- quiz ---------- */
+  let qi = 0, lock = false;
+  function renderQ() {
+    const q = Q[qi];
+    $('qtext').textContent = q.q;
+    $('qcount').textContent = `${qi + 1} / ${Q.length}`;
+    $('progbar').style.width = (qi / Q.length * 100) + '%';
+    const order = Math.random() < .5 ? [0, 1] : [1, 0];
+    order.forEach((k, i) => {
+      const b = $('o' + i), o = q.o[k];
+      b.querySelector('.em').textContent = o.e;
+      b.querySelector('.tx').textContent = o.t;
+      b.dataset.d = o.d;
+      b.classList.remove('picked', 'faded');
+    });
+    lock = false;
+  }
+  ['o0', 'o1'].forEach((id, i) => {
+    $(id).onclick = () => {
+      if (lock) return; lock = true;
+      const b = $(id);
+      st.pts[b.dataset.d]++;
+      b.classList.add('picked'); $(i ? 'o0' : 'o1').classList.add('faded');
+      tone(500 + qi * 55, .1, 'triangle'); buzz(15);
+      setTimeout(() => {
+        qi++;
+        if (qi < Q.length) { renderQ(); $('qtext').focus({ preventScroll:true }); }
+        else { $('progbar').style.width = '100%'; decide(); show('s-spin'); }
+      }, 430);
+    };
+  });
+  function decide() {
+    const m = Math.max(...Object.values(st.pts));
+    const ties = Object.keys(st.pts).filter(k => st.pts[k] === m);
+    st.dir = ties[Math.floor(Math.random() * ties.length)];
+  }
+
+  /* ---------- spin ---------- */
+  $('spinbtn').onclick = () => {
+    const b = $('spinbtn'); b.disabled = true;
+    const nd = $('needle'), dur = RM ? 300 : 3200;
+    nd.style.transition = `transform ${dur}ms cubic-bezier(.15,.75,.2,1)`;
+    nd.style.transform = `rotate(${(RM ? 0 : 1800) + ANG[st.dir]}deg)`;
+    say('Spinning…');
+    if (!RM) { let d = 50, t = 0; const tick = () => { tone(1300, .02, 'square', .03); t += d; d *= 1.13; if (t < dur - 150) setTimeout(tick, d); }; tick(); }
+    setTimeout(reveal, dur + 150);
+  };
+  function reveal() {
+    const d = DIRS[st.dir];
+    $('r-dir').textContent = '🧭 ' + d.word;
+    $('r-em').textContent = d.em;
+    $('r-name').textContent = d.name;
+    $('r-field').textContent = d.field;
+    $('r-jobs').innerHTML = '';
+    d.jobs.forEach(j => { const li = document.createElement('li'); li.textContent = j; $('r-jobs').appendChild(li); });
+    $('r-bars').innerHTML = '';
+    ['N','E','S','W'].forEach(k => {
+      const row = document.createElement('div');
+      row.className = 'bar' + (k === st.dir ? ' win' : '');
+      row.setAttribute('role', 'img');
+      row.setAttribute('aria-label', `${DIRS[k].field}: ${st.pts[k]} of 4`);
+      row.innerHTML = `<span aria-hidden="true">${DIRS[k].em} ${k}</span><span class="tr" aria-hidden="true"><span class="fl" style="display:block"></span></span>`;
+      $('r-bars').appendChild(row);
+      setTimeout(() => { row.querySelector('.fl').style.width = (st.pts[k] / 4 * 100) + '%'; }, 120);
+    });
+    $('spinbtn').hidden = true;
+    $('h-spin').textContent = `${st.first || st.name}, you’re…`;
+    $('result').hidden = false;
+    fanfare(); buzz([40, 60, 40]); confetti(70);
+    $('r-title').focus({ preventScroll:true });
+    say(`You are ${d.name}: ${d.field}.`);
+  }
+  $('toGame').onclick = () => { tone(700); show('s-game'); };
+
+  /* ---------- Profit Rush ---------- */
+  const ITEMS = [
+    { e:'🪙', v:10,  w:45, l:'coin, tap' },
+    { e:'💵', v:20,  w:25, l:'cash, tap' },
+    { e:'💎', v:50,  w:5,  l:'diamond, tap' },
+    { e:'🧾', v:-20, w:25, l:'bill, do not tap' }
+  ];
+  const DUR = 20000;
+  const grid = $('grid'), cells = [], occ = Array(9).fill(null);
+  for (let i = 0; i < 9; i++) {
+    const c = document.createElement('button');
+    c.className = 'cell'; c.setAttribute('aria-label', 'empty spot');
+    c.innerHTML = '<span class="it" aria-hidden="true"></span>';
+    c.addEventListener('pointerdown', e => { e.preventDefault(); hit(i); });
+    c.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); hit(i); } });
+    grid.appendChild(c); cells.push(c);
+  }
+  let run = false, score = 0, t0 = 0, timers = [];
+  const prog = () => Math.min(1, (performance.now() - t0) / DUR);
+  function pick() { let r = Math.random() * 100; for (const it of ITEMS) { if ((r -= it.w) < 0) return it; } return ITEMS[0]; }
+  function startGame() {
+    st.tries++; score = 0; $('score').textContent = '0'; $('time').textContent = '20';
+    $('howto').hidden = true; $('gameover').hidden = true; $('play').hidden = false;
+    run = true; t0 = performance.now();
+    for (let i = 0; i < 9; i++) clear(i);
+    say('Go! Tap the money, skip the bills.');
+    tone(880, .15, 'square', .05);
+    spawn(); requestAnimationFrame(tick);
+  }
+  function spawn() {
+    if (!run) return;
+    const free = []; occ.forEach((v, i) => { if (!v) free.push(i); });
+    const n = prog() > .55 && Math.random() < .35 ? 2 : 1;
+    for (let k = 0; k < n && free.length; k++) put(free.splice(Math.floor(Math.random() * free.length), 1)[0], pick());
+    timers.push(setTimeout(spawn, 640 - prog() * 280));
+  }
+  function put(i, it) {
+    const c = cells[i]; occ[i] = it;
+    c.querySelector('.it').textContent = it.e;
+    c.classList.add('up'); c.classList.toggle('bad', it.v < 0);
+    c.setAttribute('aria-label', it.l);
+    clearTimeout(c._t); c._t = setTimeout(() => clear(i), 1150 - prog() * 450);
+  }
+  function clear(i) {
+    const c = cells[i]; clearTimeout(c._t); occ[i] = null;
+    c.classList.remove('up', 'bad'); c.setAttribute('aria-label', 'empty spot');
+  }
+  function floatTxt(el, t, neg) {
+    const s = document.createElement('span'); s.className = 'float' + (neg ? ' neg' : ''); s.textContent = t;
+    el.appendChild(s); setTimeout(() => s.remove(), 720);
+  }
+  function hit(i) {
+    if (!run || !occ[i]) return;
+    const it = occ[i];
+    score = Math.max(0, score + it.v); $('score').textContent = score;
+    floatTxt(cells[i], (it.v > 0 ? '+$' : '−$') + Math.abs(it.v), it.v < 0);
+    if (it.v > 0) { tone(600 + it.v * 10, .08, 'triangle'); buzz(10); }
+    else { tone(150, .2, 'sawtooth', .06); buzz([30, 40, 30]); const p = $('play'); p.classList.remove('hurt'); void p.offsetWidth; p.classList.add('hurt'); }
+    clear(i);
+  }
+  function tick() {
+    if (!run) return;
+    const p = prog();
+    $('tb').style.transform = `scaleX(${1 - p})`;
+    $('time').textContent = Math.ceil((1 - p) * DUR / 1000);
+    if (p >= 1) { endGame(); return; }
+    requestAnimationFrame(tick);
+  }
+  function endGame() {
+    run = false; timers.forEach(clearTimeout); timers = [];
+    for (let i = 0; i < 9; i++) clear(i);
+    st.best = Math.max(st.best, score);
+    $('play').hidden = true; $('gameover').hidden = false;
+    $('go-score').textContent = score;
+    $('go-tier').textContent = (st.tries > 1 && st.best !== score ? `Best: $${st.best} · ` : '') + 'Now win bonus cash! 🐎';
+    $('again').hidden = st.tries >= 2;
+    fanfare(); confetti(50);
+    say(`Time! You made ${score} dollars. Next, the bonus trivia round.`);
+    setTimeout(() => $('claimBtn').focus({ preventScroll:true }), 50);
+  }
+  $('startGame').onclick = startGame;
+  $('again').onclick = startGame;
+
+  /* ---------- badge ---------- */
+  function makeCode() {
+    const A = 'ABCDEFGHJKMNPQRSTUVWXYZ23456789'; let s = '';
+    for (let i = 0; i < 4; i++) s += A[Math.floor(Math.random() * A.length)];
+    return st.dir + '-' + s;
+  }
+  function save() {
+    try { localStorage.setItem(KEY, JSON.stringify({ name:st.name, first:st.first, dir:st.dir, best:st.best, bonus:st.bonus, triv:st.triv, code:st.code, claimed:st.claimed, claimedAt:st.claimedAt })); } catch (e) {}
+  }
+  // in-progress save so a reload (e.g. after visiting an ABAC page) resumes trivia
+  function saveProg() {
+    try { localStorage.setItem(KEY, JSON.stringify({ stage:'trivia', ti, tMiss, name:st.name, first:st.first, dir:st.dir, pts:st.pts, best:st.best, tries:st.tries, bonus:st.bonus, triv:st.triv })); } catch (e) {}
+  }
+
+  /* ---------- trivia ---------- */
+  let ti = 0, tMiss = false, tLock = false, tDone = false;
+  function renderT() {
+    const t = TRIVIA[ti];
+    $('tq').textContent = t.q;
+    $('tcount').textContent = `${ti + 1} / ${TRIVIA.length}`;
+    $('tprog').style.width = (ti / TRIVIA.length * 100) + '%';
+    $('tfind').href = t.u;
+    $('tfind').setAttribute('aria-label', `Find it here: opens the ${t.s} in a new tab`);
+    $('tsrc').textContent = 'Hint: ' + t.s;
+    $('tbonus').textContent = '';
+    $('tans').innerHTML = '';
+    t.a.forEach((txt, k) => {
+      const b = document.createElement('button');
+      b.className = 'ta'; b.textContent = txt;
+      b.onclick = () => answerT(b, k);
+      $('tans').appendChild(b);
+    });
+    tMiss = false; tLock = false;
+  }
+  function answerT(b, k) {
+    if (tLock) return;
+    const t = TRIVIA[ti];
+    if (k !== t.c) {
+      tMiss = true; b.classList.add('wrong'); b.disabled = true; saveProg();
+      tone(170, .2, 'sawtooth', .05); buzz([30, 40, 30]);
+      say('Not quite. Tap Find it here to check the ABAC page, then try again.');
+      return;
+    }
+    tLock = true; b.classList.add('right');
+    if (!tMiss) { st.bonus += BONUS; st.triv++; $('tbonus').textContent = `+$${BONUS} bonus!`; floatTxt(b, `+$${BONUS}`, false); }
+    else $('tbonus').textContent = 'Got it! ✔';
+    tone(880, .1, 'triangle'); tone(1175, .14, 'triangle', .08, .1); buzz(15);
+    say(tMiss ? 'Correct!' : `Correct! Plus ${BONUS} dollars.`);
+    setTimeout(() => {
+      ti++;
+      if (ti < TRIVIA.length) { renderT(); saveProg(); $('tq').focus({ preventScroll:true }); }
+      else { tDone = true; $('tprog').style.width = '100%'; claim(); }
+    }, 900);
+  }
+  function load() { try { return JSON.parse(localStorage.getItem(KEY) || 'null'); } catch (e) { return null; } }
+  function renderBadge() {
+    const d = DIRS[st.dir] || DIRS.N, t = TIERS(total());
+    $('badge').className = 'badge ' + t.k;
+    $('b-em').textContent = d.em;
+    $('b-tier').textContent = t.e + ' ' + t.l;
+    $('b-name').textContent = st.name;
+    $('b-arch').textContent = `${d.name} · ${d.field}`;
+    $('b-dir').textContent = d.word;
+    $('b-score').textContent = '$' + total();
+    $('b-triv').textContent = `${st.triv || 0}/${TRIVIA.length}`;
+    $('b-code').textContent = st.code;
+    $('stamp').hidden = !st.claimed;
+    $('stampTime').textContent = st.claimedAt;
+    $('hold').hidden = st.claimed;
+    $('claimText').textContent = st.claimed ? 'Thanks for playing! 🎓 See you at ABAC.' : 'Show this to claim your prize 🎁';
+  }
+  $('claimBtn').onclick = () => {
+    if (tDone) { claim(); return; }
+    ti = 0; st.bonus = 0; st.triv = 0; renderT(); saveProg(); tone(700); show('s-trivia');
+  };
+  function claim() {
+    st.code = st.code || makeCode();
+    save(); renderBadge(); show('s-badge');
+    setTimeout(() => { fanfare(); confetti(120); }, 250);
+    say(`Badge earned, ${st.first || st.name}. Show it to claim your prize.`);
+  }
+  function tickClock() { $('clock').textContent = new Date().toLocaleTimeString([], { hour:'numeric', minute:'2-digit', second:'2-digit' }); }
+  tickClock(); setInterval(tickClock, 1000);
+
+  // presenter press-and-hold to mark claimed (prevents double prizes)
+  const hb = $('hold'); let holdT = 0;
+  function holdStart(e) {
+    if (st.claimed) return; e.preventDefault();
+    hb.classList.add('holding');
+    holdT = setTimeout(() => {
+      st.claimed = true;
+      st.claimedAt = new Date().toLocaleTimeString([], { hour:'numeric', minute:'2-digit' });
+      save(); renderBadge(); hb.classList.remove('holding');
+      tone(300, .25, 'square', .06); buzz(90); say('Prize claimed.');
+    }, 2000);
+  }
+  function holdEnd() { clearTimeout(holdT); hb.classList.remove('holding'); }
+  hb.addEventListener('pointerdown', holdStart);
+  ['pointerup', 'pointerleave', 'pointercancel'].forEach(ev => hb.addEventListener(ev, holdEnd));
+  hb.addEventListener('keydown', e => { if ((e.key === ' ' || e.key === 'Enter') && !e.repeat) holdStart(e); });
+  hb.addEventListener('keyup', holdEnd);
+  hb.addEventListener('contextmenu', e => e.preventDefault());
+
+  // returning visitor: go straight to their badge
+  const sv = load();
+  if (sv && sv.code && DIRS[sv.dir]) { Object.assign(st, sv); renderBadge(); show('s-badge'); }
+  else if (sv && sv.stage === 'trivia' && DIRS[sv.dir] && sv.ti >= 0 && sv.ti < TRIVIA.length) {
+    const { stage, ti:savedTi, tMiss:savedMiss, ...rest } = sv;
+    Object.assign(st, rest); ti = savedTi; renderT(); tMiss = !!savedMiss; show('s-trivia');
+  }
+})();
+</script>
+</body>
+</html>
