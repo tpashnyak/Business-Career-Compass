@@ -84,13 +84,13 @@ h2{font-size:28px;line-height:1.15}
 #progbar{height:100%;width:0;background:linear-gradient(90deg,var(--gold),var(--gold2));border-radius:99px;transition:width .4s}
 .qcount{font-family:var(--mono);color:var(--gold);font-size:14px;letter-spacing:.1em}
 #qtext{min-height:2.4em;display:flex;align-items:center;justify-content:center}
-.opts{display:grid;grid-template-columns:1fr 1fr;gap:16px;width:100%;position:relative;margin-top:6px}
-.opt{background:var(--card);border:2px solid rgba(255,255,255,.14);border-radius:24px;min-height:180px;padding:16px 10px;
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:12px;width:100%;position:relative;margin-top:6px}
+.opt{background:var(--card);border:2px solid rgba(255,255,255,.14);border-radius:22px;min-height:132px;padding:12px 8px;
   display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;
   transition:transform .2s,opacity .2s,background .2s,border-color .2s}
 .opt:active{transform:scale(.96)}
-.opt .em{font-size:56px;line-height:1}
-.opt .tx{font-weight:800;font-size:18px}
+.opt .em{font-size:44px;line-height:1}
+.opt .tx{font-weight:800;font-size:16px;line-height:1.2}
 .opt.picked{background:rgba(242,193,78,.22);border-color:var(--gold);transform:scale(1.05)}
 .opt.faded{opacity:.3;transform:scale(.93)}
 .or{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:42px;height:42px;border-radius:50%;
@@ -103,7 +103,9 @@ h2{font-size:28px;line-height:1.15}
 #r-title{font-size:34px}
 .r-field{color:var(--muted);font-size:17px;font-weight:600}
 .chips{list-style:none;display:flex;flex-wrap:wrap;justify-content:center;gap:8px}
-.chips li{background:rgba(242,193,78,.14);border:1px solid var(--line);padding:8px 14px;border-radius:99px;font-weight:700;font-size:15px}
+.chips li{background:rgba(242,193,78,.14);border:1px solid var(--line);padding:6px 11px;border-radius:99px;font-weight:700;font-size:14px}
+.chips li.abac{background:rgba(94,224,143,.16);border-color:rgba(94,224,143,.6)}
+.chips-l{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:700;margin-bottom:-4px}
 .bars{width:100%;max-width:300px;display:grid;gap:6px}
 .bar{display:grid;grid-template-columns:44px 1fr;align-items:center;gap:8px;font-size:15px}
 .bar .tr{height:12px;background:rgba(255,255,255,.1);border-radius:99px;overflow:hidden}
@@ -225,7 +227,7 @@ h2{font-size:28px;line-height:1.15}
 
 #fx{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:30}
 
-@media (max-width:360px){h1{font-size:34px}h1 span{font-size:40px}.opt{min-height:150px}.opt .em{font-size:46px}.compass{width:210px;height:210px}}
+@media (max-width:360px){h1{font-size:34px}h1 span{font-size:40px}.opt{min-height:118px}.opt .em{font-size:38px}.opt .tx{font-size:15px}.compass{width:210px;height:210px}}
 @media (max-height:720px){
   #s-badge{padding-top:52px;gap:10px}
   .badge{padding:16px 14px 14px}
@@ -278,10 +280,8 @@ h2{font-size:28px;line-height:1.15}
   <div class="prog" aria-hidden="true"><div id="progbar"></div></div>
   <p class="qcount" id="qcount">1 / 8</p>
   <h2 id="qtext" tabindex="-1"></h2>
-  <div class="opts">
-    <button class="opt" id="o0"><span class="em" aria-hidden="true"></span><span class="tx"></span></button>
-    <button class="opt" id="o1"><span class="em" aria-hidden="true"></span><span class="tx"></span></button>
-    <span class="or" aria-hidden="true">OR</span>
+  <div class="opts" id="opts">
+
   </div>
 </section>
 
@@ -297,9 +297,10 @@ h2{font-size:28px;line-height:1.15}
     <p class="r-dir" id="r-dir"></p>
     <h3 id="r-title" tabindex="-1"><span id="r-em" aria-hidden="true"></span> <span id="r-name"></span></h3>
     <p class="r-field" id="r-field"></p>
+    <p class="chips-l">💼 Careers to explore · 🎓 = ABAC career path</p>
     <ul class="chips" id="r-jobs" aria-label="Careers to explore"></ul>
     <div class="bars" id="r-bars"></div>
-    <p class="r-abac">🎓 Every direction starts with a <b>BS in Business</b> at ABAC Bainbridge</p>
+    <p class="r-abac"><b id="r-track"></b><br>Every direction starts with a <b>BS in Business</b> at ABAC Bainbridge</p>
     <button class="btn" id="toGame">Run a business 🚀</button>
   </div>
 </section>
@@ -405,21 +406,25 @@ h2{font-size:28px;line-height:1.15}
   if (/[?&]reset/.test(location.search)) { try { store && store.removeItem(KEY); } catch (e) {} }
 
   const DIRS = {
-    N: { word:'NORTH', name:'The Captain',     em:'⭐', field:'Management & Leadership', jobs:['Operations Manager','HR Manager','Sales Manager'] },
-    E: { word:'EAST',  name:'The Spark',       em:'⚡', field:'Marketing & Sales',       jobs:['Brand Manager','Social Media Strategist','Event Marketer'] },
-    S: { word:'SOUTH', name:'The Strategist',  em:'📊', field:'Finance & Accounting',    jobs:['Financial Analyst','Accountant','Banker'] },
-    W: { word:'WEST',  name:'The Trailblazer', em:'🚀', field:'Entrepreneurship',        jobs:['Startup Founder','Small Business Owner','Franchise Owner'] }
+    N:  { word:'NORTH',     name:'The Captain',       em:'⭐', field:'Management & Leadership',  abac:['Human Resources Manager','Management Analyst','Logistician'], jobs:['Operations Manager','Project Manager','Store Manager'], track:'Management' },
+    E:  { word:'EAST',      name:'The Spark',         em:'⚡', field:'Marketing & Branding',     abac:['Marketing Specialist','Market Research Analyst'], jobs:['Brand Manager','Social Media Strategist','Event Marketer','PR Specialist'], track:'General Business' },
+    S:  { word:'SOUTH',     name:'The Strategist',    em:'📊', field:'Finance & Accounting',     abac:['Financial Manager','Accountant','Financial Advisor','Economist'], jobs:['Banker','Auditor'], track:'Economics' },
+    W:  { word:'WEST',      name:'The Trailblazer',   em:'🚀', field:'Entrepreneurship',         abac:['Entrepreneur'], jobs:['Small Business Owner','E-commerce Seller','Food Truck Owner','Product Inventor','Freelance Consultant'], track:'General Business' },
+    NE: { word:'NORTHEAST', name:'The Rainmaker',     em:'🤝', field:'Sales Leadership',         abac:['Marketing Specialist','Human Resources Manager'], jobs:['Sales Director','Account Executive','Business Development Manager','Recruiter'], track:'Management' },
+    SE: { word:'SOUTHEAST', name:'The Data Detective', em:'🔍', field:'Marketing Analytics',     abac:['Market Research Analyst','Economist'], jobs:['Pricing Strategist','Digital Ads Analyst','E-commerce Manager','Consumer Insights Analyst'], track:'Economics' },
+    SW: { word:'SOUTHWEST', name:'The Investor',      em:'💰', field:'Investing & Venture',      abac:['Financial Advisor','Financial Manager','Entrepreneur'], jobs:['Venture Capital Analyst','Real Estate Investor','Small Business Lender'], track:'Economics' },
+    NW: { word:'NORTHWEST', name:'The Mogul',         em:'👑', field:'Executive Leadership',     abac:['Entrepreneur','Management Analyst','Logistician'], jobs:['CEO','Franchise Owner','Management Consultant'], track:'Management' }
   };
-  const ANG = { N:0, E:90, S:180, W:270 };
+  const ANG = { N:0, NE:45, E:90, SE:135, S:180, SW:225, W:270, NW:315 };
   const Q = [
-    { q:'Friday night, you’d rather…',        o:[{e:'🎉',t:'Plan the party',d:'N'},{e:'🎨',t:'Design the flyer',d:'E'}] },
-    { q:'Group project — you grab…',           o:[{e:'📊',t:'The budget',d:'S'},{e:'💡',t:'The wild idea',d:'W'}] },
-    { q:'Your secret superpower?',             o:[{e:'🧭',t:'Leading people',d:'N'},{e:'🧮',t:'Crunching numbers',d:'S'}] },
-    { q:'Your camera roll is full of…',        o:[{e:'📸',t:'Edits & content',d:'E'},{e:'🚀',t:'Side-hustle ideas',d:'W'}] },
-    { q:'Dream job title?',                    o:[{e:'👔',t:'The Boss',d:'N'},{e:'🏗️',t:'The Founder',d:'W'}] },
-    { q:'Scrolling, you notice…',              o:[{e:'📣',t:'Clever ads',d:'E'},{e:'💸',t:'What stuff costs',d:'S'}] },
-    { q:'A local shop is struggling. You…',    o:[{e:'🤝',t:'Coach the team',d:'N'},{e:'📱',t:'Make it go viral',d:'E'}] },
-    { q:'Got $100 birthday cash?',             o:[{e:'🏦',t:'Save & grow it',d:'S'},{e:'🛒',t:'Buy, resell, profit',d:'W'}] }
+    { q:'Friday night, you’d rather…',      o:[{e:'🎉',t:'Plan the party',d:'N'},{e:'🎨',t:'Design the flyer',d:'E'},{e:'🎟️',t:'Run the ticket table',d:'S'},{e:'🍿',t:'Sell snacks at it',d:'W'}] },
+    { q:'Group project — you grab…',         o:[{e:'🧭',t:'Leading the team',d:'N'},{e:'🎤',t:'The presentation',d:'E'},{e:'📊',t:'The data & charts',d:'S'},{e:'💡',t:'The big idea',d:'W'}] },
+    { q:'Your secret superpower?',           o:[{e:'🤝',t:'Teamwork magic',d:'N'},{e:'😎',t:'Style & vibes',d:'E'},{e:'🧮',t:'Mental math',d:'S'},{e:'🔥',t:'Never quitting',d:'W'}] },
+    { q:'Your phone is full of…',            o:[{e:'📅',t:'Group plans',d:'N'},{e:'📸',t:'Edits & content',d:'E'},{e:'📈',t:'Money apps',d:'S'},{e:'🛒',t:'Side-hustle ideas',d:'W'}] },
+    { q:'Dream job title?',                  o:[{e:'👔',t:'The Boss',d:'N'},{e:'📣',t:'Head of Hype',d:'E'},{e:'🏦',t:'Money Master',d:'S'},{e:'🏗️',t:'The Founder',d:'W'}] },
+    { q:'Scrolling, you stop for…',          o:[{e:'🏆',t:'Big team wins',d:'N'},{e:'📺',t:'Clever ads',d:'E'},{e:'💸',t:'What stuff costs',d:'S'},{e:'🦈',t:'Shark Tank pitches',d:'W'}] },
+    { q:'A local shop is struggling. You…',  o:[{e:'🙌',t:'Coach the staff',d:'N'},{e:'📱',t:'Make it go viral',d:'E'},{e:'🧾',t:'Fix the budget',d:'S'},{e:'🔄',t:'Reinvent the shop',d:'W'}] },
+    { q:'Got $100 birthday cash?',           o:[{e:'🍕',t:'Treat the squad',d:'N'},{e:'🎥',t:'Gear for content',d:'E'},{e:'🏦',t:'Save & grow it',d:'S'},{e:'🔁',t:'Buy, resell, profit',d:'W'}] }
   ];
   const TIERS = s => s >= 480 ? {k:'gold',l:'GOLD',e:'🥇'} : s >= 300 ? {k:'silver',l:'SILVER',e:'🥈'} : {k:'bronze',l:'BRONZE',e:'🥉'};
 
@@ -512,40 +517,42 @@ h2{font-size:28px;line-height:1.15}
   $('ln').addEventListener('keydown', e => { if (e.key === 'Enter') $('go').click(); });
 
   /* ---------- quiz ---------- */
-  let qi = 0, lock = false;
+  let qi = 0, lock = false, lastPick = null;
   function renderQ() {
     const q = Q[qi];
     $('qtext').textContent = q.q;
     $('qcount').textContent = `${qi + 1} / ${Q.length}`;
     $('progbar').style.width = (qi / Q.length * 100) + '%';
-    const order = Math.random() < .5 ? [0, 1] : [1, 0];
-    order.forEach((k, i) => {
-      const b = $('o' + i), o = q.o[k];
-      b.querySelector('.em').textContent = o.e;
-      b.querySelector('.tx').textContent = o.t;
-      b.dataset.d = o.d;
-      b.classList.remove('picked', 'faded');
+    const order = q.o.slice().sort(() => Math.random() - .5);
+    $('opts').innerHTML = '';
+    order.forEach(o => {
+      const b = document.createElement('button'); b.className = 'opt';
+      const em = document.createElement('span'); em.className = 'em'; em.setAttribute('aria-hidden', 'true'); em.textContent = o.e;
+      const tx = document.createElement('span'); tx.className = 'tx'; tx.textContent = o.t;
+      b.append(em, tx);
+      b.onclick = () => pickQ(b, o.d);
+      $('opts').appendChild(b);
     });
     lock = false;
   }
-  ['o0', 'o1'].forEach((id, i) => {
-    $(id).onclick = () => {
-      if (lock) return; lock = true;
-      const b = $(id);
-      st.pts[b.dataset.d]++;
-      b.classList.add('picked'); $(i ? 'o0' : 'o1').classList.add('faded');
-      tone(500 + qi * 55, .1, 'triangle'); buzz(15);
-      setTimeout(() => {
-        qi++;
-        if (qi < Q.length) { renderQ(); $('qtext').focus({ preventScroll:true }); }
-        else { $('progbar').style.width = '100%'; decide(); show('s-spin'); }
-      }, 430);
-    };
-  });
+  function pickQ(b, d) {
+    if (lock) return; lock = true;
+    st.pts[d]++; lastPick = d;
+    [...$('opts').children].forEach(x => x.classList.add(x === b ? 'picked' : 'faded'));
+    tone(500 + qi * 55, .1, 'triangle'); buzz(15);
+    setTimeout(() => {
+      qi++;
+      if (qi < Q.length) { renderQ(); $('qtext').focus({ preventScroll:true }); }
+      else { $('progbar').style.width = '100%'; decide(); show('s-spin'); }
+    }, 430);
+  }
+  // Top direction wins; if the runner-up is a compass neighbor within 1 point, it's a blend (NE, SE, SW, NW).
+  const BLEND = { 'NE':'NE','EN':'NE','SE':'SE','ES':'SE','SW':'SW','WS':'SW','NW':'NW','WN':'NW' };
   function decide() {
-    const m = Math.max(...Object.values(st.pts));
-    const ties = Object.keys(st.pts).filter(k => st.pts[k] === m);
-    st.dir = ties[Math.floor(Math.random() * ties.length)];
+    const ks = ['N','E','S','W'].sort(() => Math.random() - .5)
+      .sort((a, b) => st.pts[b] - st.pts[a] || (b === lastPick) - (a === lastPick));
+    const [a, b] = ks;
+    st.dir = (st.pts[a] - st.pts[b] <= 1 && BLEND[a + b] && st.pts[b] > 0) ? BLEND[a + b] : a;
   }
 
   /* ---------- spin ---------- */
@@ -565,16 +572,19 @@ h2{font-size:28px;line-height:1.15}
     $('r-name').textContent = d.name;
     $('r-field').textContent = d.field;
     $('r-jobs').innerHTML = '';
+    d.abac.forEach(j => { const li = document.createElement('li'); li.className = 'abac'; li.textContent = '🎓 ' + j; li.setAttribute('aria-label', j + ', an ABAC BS in Business career path'); $('r-jobs').appendChild(li); });
     d.jobs.forEach(j => { const li = document.createElement('li'); li.textContent = j; $('r-jobs').appendChild(li); });
+    $('r-track').textContent = `🎓 Try ABAC’s ${d.track} Track`;
     $('r-bars').innerHTML = '';
     ['N','E','S','W'].forEach(k => {
       const row = document.createElement('div');
-      row.className = 'bar' + (k === st.dir ? ' win' : '');
+      row.className = 'bar' + (st.dir.includes(k) ? ' win' : '');
       row.setAttribute('role', 'img');
-      row.setAttribute('aria-label', `${DIRS[k].field}: ${st.pts[k]} of 4`);
+      row.setAttribute('aria-label', `${DIRS[k].field}: ${st.pts[k]} of ${Q.length}`);
       row.innerHTML = `<span aria-hidden="true">${DIRS[k].em} ${k}</span><span class="tr" aria-hidden="true"><span class="fl" style="display:block"></span></span>`;
       $('r-bars').appendChild(row);
-      setTimeout(() => { row.querySelector('.fl').style.width = (st.pts[k] / 4 * 100) + '%'; }, 120);
+      const top = Math.max(1, ...Object.values(st.pts));
+      setTimeout(() => { row.querySelector('.fl').style.width = (st.pts[k] / top * 100) + '%'; }, 120);
     });
     $('spinbtn').hidden = true;
     $('h-spin').textContent = `${st.first || st.name}, you’re…`;
@@ -783,7 +793,7 @@ h2{font-size:28px;line-height:1.15}
     $('b-tier').textContent = t.e + ' ' + t.l;
     $('b-name').textContent = st.name;
     $('b-arch').textContent = `${d.name} · ${d.field}`;
-    $('b-dir').textContent = d.word;
+    $('b-dir').textContent = d.word; $('b-dir').style.fontSize = d.word.length > 5 ? '12px' : '';
     $('b-score').textContent = '$' + total();
     $('b-triv').textContent = `${st.triv || 0}/${TRIVIA.length}`;
     $('b-code').textContent = st.code;
