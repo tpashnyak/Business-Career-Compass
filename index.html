@@ -3,21 +3,21 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#0b1a33">
+<meta name="theme-color" content="#00331b">
 <meta name="description" content="Spin the Business Career Compass, launch a pop-up business, and earn a prize badge. ABAC Bainbridge, Stafford School of Business.">
 <title>Business Career Compass · ABAC Bainbridge</title>
 <style>
 :root{
-  --navy:#0b1a33;--navy2:#13284d;--navy3:#1d3a6b;
-  --gold:#f2c14e;--gold2:#ffd97a;--ink:#f5f1e6;--muted:#c3cbdb;
-  --red:#ff7a7a;--green:#5ee08f;--card:rgba(255,255,255,.07);--line:rgba(242,193,78,.4);
+  --navy:#00331b;--navy2:#00432a;--navy3:#0a5a33;
+  --gold:#FEBE10;--gold2:#FFD452;--ink:#f5f1e6;--muted:#c3cbdb;
+  --red:#ff7a7a;--green:#5ee08f;--card:rgba(255,255,255,.07);--line:rgba(254,190,16,.4);
   --serif:Georgia,"Times New Roman",serif;
   --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{min-height:100%}
 body{
-  background:radial-gradient(circle at 50% -10%,#2a5191 0,var(--navy) 62%) fixed,var(--navy);
+  background:radial-gradient(circle at 50% -10%,#0e7a45 0,var(--navy) 62%) fixed,var(--navy);
   color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
   -webkit-tap-highlight-color:transparent;overflow-x:hidden;line-height:1.35;
 }
@@ -25,10 +25,10 @@ body::before{
   content:"";position:fixed;inset:0;pointer-events:none;opacity:.55;
   background-image:
     radial-gradient(1.5px 1.5px at 12% 18%,#fff 50%,transparent 51%),
-    radial-gradient(1.5px 1.5px at 78% 12%,#ffd97a 50%,transparent 51%),
+    radial-gradient(1.5px 1.5px at 78% 12%,#FFD452 50%,transparent 51%),
     radial-gradient(1px 1px at 40% 70%,#fff 50%,transparent 51%),
     radial-gradient(1.5px 1.5px at 88% 64%,#fff 50%,transparent 51%),
-    radial-gradient(1px 1px at 22% 88%,#ffd97a 50%,transparent 51%),
+    radial-gradient(1px 1px at 22% 88%,#FFD452 50%,transparent 51%),
     radial-gradient(1px 1px at 60% 35%,#fff 50%,transparent 51%),
     radial-gradient(1.5px 1.5px at 5% 55%,#fff 50%,transparent 51%);
 }
@@ -51,9 +51,9 @@ h2{font-size:28px;line-height:1.15}
 
 /* buttons */
 .btn{background:linear-gradient(180deg,var(--gold2),var(--gold));color:var(--navy);font-weight:800;font-size:20px;
-  padding:16px 28px;border-radius:999px;min-width:220px;box-shadow:0 6px 0 #b8871f,0 10px 24px rgba(0,0,0,.35);
+  padding:16px 28px;border-radius:999px;min-width:220px;box-shadow:0 6px 0 #b38600,0 10px 24px rgba(0,0,0,.35);
   transition:transform .1s,box-shadow .1s}
-.btn:active{transform:translateY(4px);box-shadow:0 2px 0 #b8871f,0 4px 10px rgba(0,0,0,.35)}
+.btn:active{transform:translateY(4px);box-shadow:0 2px 0 #b38600,0 4px 10px rgba(0,0,0,.35)}
 .btn:disabled{opacity:.6}
 .btn.ghost{background:transparent;color:var(--gold);box-shadow:none;border:2px solid var(--line);font-size:17px;padding:12px 22px}
 .sound{position:fixed;top:12px;right:12px;z-index:20;width:44px;height:44px;border-radius:50%;
@@ -66,7 +66,7 @@ h2{font-size:28px;line-height:1.15}
 .nmi{width:100%;font-size:19px;text-align:center;padding:13px 8px;border-radius:16px;
   border:2px solid var(--line);background:rgba(255,255,255,.08);color:var(--ink);font-weight:700}
 .nmi::placeholder{color:#97a3bb;font-weight:400}
-.nmi:focus{outline:none;border-color:var(--gold2);box-shadow:0 0 0 4px rgba(242,193,78,.25)}
+.nmi:focus{outline:none;border-color:var(--gold2);box-shadow:0 0 0 4px rgba(254,190,16,.25)}
 .shake{animation:shake .4s}
 @keyframes shake{20%,60%{transform:translateX(-8px)}40%,80%{transform:translateX(8px)}}
 
@@ -77,7 +77,7 @@ h2{font-size:28px;line-height:1.15}
 .needle{position:absolute;inset:0;transform:rotate(-35deg)}
 .small .needle{animation:wobble 2.4s ease-in-out infinite}
 @keyframes wobble{0%,100%{transform:rotate(-25deg)}50%{transform:rotate(30deg)}}
-.glow{filter:drop-shadow(0 0 18px rgba(242,193,78,.45))}
+.glow{filter:drop-shadow(0 0 18px rgba(254,190,16,.45))}
 
 /* quiz */
 .prog{width:100%;height:10px;background:rgba(255,255,255,.1);border-radius:99px;overflow:hidden}
@@ -91,7 +91,7 @@ h2{font-size:28px;line-height:1.15}
 .opt:active{transform:scale(.96)}
 .opt .em{font-size:44px;line-height:1}
 .opt .tx{font-weight:800;font-size:16px;line-height:1.2}
-.opt.picked{background:rgba(242,193,78,.22);border-color:var(--gold);transform:scale(1.05)}
+.opt.picked{background:rgba(254,190,16,.22);border-color:var(--gold);transform:scale(1.05)}
 .opt.faded{opacity:.3;transform:scale(.93)}
 .or{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:42px;height:42px;border-radius:50%;
   background:var(--navy);border:2px solid var(--gold);color:var(--gold);font-weight:900;font-size:13px;
@@ -103,7 +103,7 @@ h2{font-size:28px;line-height:1.15}
 #r-title{font-size:34px}
 .r-field{color:var(--muted);font-size:17px;font-weight:600}
 .chips{list-style:none;display:flex;flex-wrap:wrap;justify-content:center;gap:8px}
-.chips li{background:rgba(242,193,78,.14);border:1px solid var(--line);padding:6px 11px;border-radius:99px;font-weight:700;font-size:14px}
+.chips li{background:rgba(254,190,16,.14);border:1px solid var(--line);padding:6px 11px;border-radius:99px;font-weight:700;font-size:14px}
 .chips li.abac{background:rgba(94,224,143,.16);border-color:rgba(94,224,143,.6)}
 .chips-l{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:700;margin-bottom:-4px}
 .bars{width:100%;max-width:300px;display:grid;gap:6px}
@@ -130,12 +130,12 @@ h2{font-size:28px;line-height:1.15}
 .play{width:100%;display:flex;flex-direction:column;gap:12px;align-items:center}
 .play.hurt{animation:shake .3s}
 .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;width:100%;max-width:360px}
-.cell{aspect-ratio:1;border-radius:22px;background:radial-gradient(circle at 50% 70%,#0a1428,#1a3561);
+.cell{aspect-ratio:1;border-radius:22px;background:radial-gradient(circle at 50% 70%,#00240f,#064d2c);
   border:2px solid rgba(255,255,255,.1);position:relative;overflow:visible;display:grid;place-items:center;
   box-shadow:inset 0 -8px 0 rgba(0,0,0,.25);transition:background .15s}
 .cell .it{font-size:46px;line-height:1;transform:scale(0) translateY(20px);transition:transform .14s ease-out}
 .cell.up .it{transform:scale(1) translateY(0)}
-.cell.up{border-color:rgba(242,193,78,.55)}
+.cell.up{border-color:rgba(254,190,16,.55)}
 .cell.up.bad{border-color:rgba(255,122,122,.7);background:radial-gradient(circle at 50% 70%,#2a0f18,#4a1a28)}
 .float{position:absolute;left:50%;top:10%;transform:translateX(-50%);font-weight:900;font-size:22px;color:var(--green);
   pointer-events:none;animation:up .7s ease-out forwards;text-shadow:0 2px 6px #000;white-space:nowrap}
@@ -147,18 +147,18 @@ h2{font-size:28px;line-height:1.15}
 
 /* badge */
 .badge{--t:var(--gold);position:relative;width:min(340px,100%);padding:22px 18px 18px;border-radius:28px;overflow:hidden;
-  background:linear-gradient(160deg,#24477f,#0b1a33 72%);border:3px solid var(--t);
-  box-shadow:0 0 0 6px rgba(0,0,0,.25),0 0 44px rgba(242,193,78,.35)}
+  background:linear-gradient(160deg,#0b6b3c,#00331b 72%);border:3px solid var(--t);
+  box-shadow:0 0 0 6px rgba(0,0,0,.25),0 0 44px rgba(254,190,16,.35)}
 .badge.silver{--t:#dbe2ec;box-shadow:0 0 0 6px rgba(0,0,0,.25),0 0 44px rgba(219,226,236,.3)}
 .badge.bronze{--t:#e8a066;box-shadow:0 0 0 6px rgba(0,0,0,.25),0 0 44px rgba(232,160,102,.3)}
 .holo{position:absolute;inset:0;pointer-events:none;
-  background:linear-gradient(115deg,transparent 30%,rgba(255,255,255,.2) 44%,rgba(242,193,78,.2) 50%,rgba(96,165,250,.15) 56%,transparent 68%);
+  background:linear-gradient(115deg,transparent 30%,rgba(255,255,255,.2) 44%,rgba(254,190,16,.2) 50%,rgba(96,165,250,.15) 56%,transparent 68%);
   background-size:260% 100%;animation:holo 3s linear infinite}
 @keyframes holo{from{background-position:160% 0}to{background-position:-110% 0}}
 .b-top{font-size:11px;letter-spacing:.16em;font-weight:800;color:var(--t)}
 .b-sub{font-family:var(--serif);font-size:18px;margin-top:2px}
 .b-medal{width:118px;height:118px;margin:18px auto 12px;border-radius:50%;display:grid;place-items:center;font-size:58px;
-  background:radial-gradient(circle,#2a5191,#0b1a33);border:4px solid var(--t);position:relative}
+  background:radial-gradient(circle,#0e7a45,#00331b);border:4px solid var(--t);position:relative}
 .b-medal::after{content:"";position:absolute;inset:-12px;border-radius:50%;border:2px dashed var(--t);animation:spin 14s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
 .b-tier{display:inline-block;background:var(--t);color:var(--navy);font-weight:900;letter-spacing:.14em;font-size:14px;padding:5px 14px;border-radius:99px}
@@ -183,11 +183,15 @@ h2{font-size:28px;line-height:1.15}
   padding:10px 14px;border-radius:12px;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none;touch-action:none}
 .hold::after{content:"";position:absolute;inset:0;background:rgba(255,122,122,.35);transform:scaleX(0);transform-origin:left;transition:transform .15s}
 .hold.holding::after{transform:scaleX(1);transition:transform 2s linear}
+.logo{height:42px;width:auto;max-width:80%;display:block;margin:0 auto}
+.logo.sm{height:26px;margin-bottom:8px}
 .link{color:var(--gold2);font-weight:700;font-size:15px}
+.motto{font-family:var(--serif);font-style:italic;font-weight:700;color:var(--gold);font-size:18px;margin-top:-6px}
+.motto.sm{font-size:14px;margin-top:4px}
 
 /* trivia */
-.find{display:inline-flex;align-items:center;gap:8px;background:rgba(96,165,250,.16);border:2px solid rgba(96,165,250,.55);
-  color:#cfe3ff;font-weight:800;font-size:16px;padding:10px 16px;border-radius:99px;text-decoration:none}
+.find{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.12);border:2px solid rgba(255,255,255,.55);
+  color:#fff;font-weight:800;font-size:16px;padding:10px 16px;border-radius:99px;text-decoration:none}
 .tq-src{font-size:13px;color:var(--muted)}
 .tans{display:grid;gap:10px;width:100%}
 .ta{background:var(--card);border:2px solid rgba(255,255,255,.14);border-radius:18px;padding:16px;font-weight:800;font-size:18px;
@@ -206,13 +210,13 @@ h2{font-size:28px;line-height:1.15}
 .ps span{font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;padding:7px 2px;border-radius:99px;
   background:rgba(255,255,255,.07);color:var(--muted);border:1px solid transparent}
 .ps span.now{border-color:var(--gold);color:var(--gold2)}
-.ps span.done{background:rgba(242,193,78,.25);color:var(--ink)}
+.ps span.done{background:rgba(254,190,16,.25);color:var(--ink)}
 .lo{display:flex;align-items:center;gap:14px;text-align:left;padding:12px 16px}
 .lo .le{font-size:38px;line-height:1}
 .lo .lt{display:flex;flex-direction:column}
 .lo small{font-weight:600;font-size:14px;color:var(--muted)}
 .street{position:relative;width:100%;height:96px;border-radius:18px;overflow:hidden;
-  background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.02));border-bottom:4px solid rgba(242,193,78,.5)}
+  background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.02));border-bottom:4px solid rgba(254,190,16,.5)}
 .shop{position:absolute;right:10px;top:50%;transform:translateY(-50%);font-size:52px;animation:bob .6s ease-in-out infinite alternate}
 @keyframes bob{to{transform:translateY(-58%) scale(1.06)}}
 .cust{position:absolute;left:-30px;font-size:28px;animation:walk 1.2s linear forwards}
@@ -238,6 +242,9 @@ h2{font-size:28px;line-height:1.15}
   .b-stats div{padding:6px 4px}
   .b-code{margin-top:8px}
   .claim{font-size:17px}
+  .b-sub{font-size:14px}
+  .compass.small{width:116px;height:116px}
+  .logo{height:34px}
   #s-game{padding-top:52px;gap:10px}
   #lresult{gap:8px}
   .go-big{font-size:46px}
@@ -259,13 +266,15 @@ h2{font-size:28px;line-height:1.15}
 
 <!-- START -->
 <section id="s-start" class="screen active" aria-labelledby="h-start">
+  <img class="logo" src="https://www.abac.edu/_assets/images/logo-white.svg" alt="Abraham Baldwin Agricultural College" onerror="this.remove()">
   <p class="brand">ABAC Bainbridge · Stafford School of Business</p>
   <div class="compass small glow" aria-hidden="true">
     <svg viewBox="0 0 200 200"><use href="#dial"/></svg>
     <div class="needle"><svg viewBox="0 0 200 200"><use href="#ndl"/></svg></div>
   </div>
   <h1 id="h-start" tabindex="-1">Business <span>Career Compass</span></h1>
-  <p class="sub">8 taps · 1 business · 5 trivia · 1 prize 🎁</p>
+  <p class="sub">8 taps · 1 business · 7 trivia · 🎁</p>
+  <p class="motto">#StayCloseGoFar</p>
   <div class="names">
     <div><label for="nm" class="lbl">First name</label>
     <input id="nm" class="nmi" maxlength="20" autocomplete="given-name" autocapitalize="words" placeholder="First" enterkeyhint="next"></div>
@@ -335,8 +344,8 @@ h2{font-size:28px;line-height:1.15}
 <!-- TRIVIA -->
 <section id="s-trivia" class="screen" aria-labelledby="tq">
   <p class="brand">🐎 Bonus Round · ABAC Trivia</p>
-  <div class="prog" aria-hidden="true"><div id="tprog" style="height:100%;width:0;background:linear-gradient(90deg,#60a5fa,var(--green));border-radius:99px;transition:width .4s"></div></div>
-  <p class="qcount" id="tcount">1 / 5</p>
+  <div class="prog" aria-hidden="true"><div id="tprog" style="height:100%;width:0;background:linear-gradient(90deg,var(--gold),var(--green));border-radius:99px;transition:width .4s"></div></div>
+  <p class="qcount" id="tcount">1 / 7</p>
   <h2 id="tq" tabindex="-1"></h2>
   <a class="find" id="tfind" href="#" target="_blank" rel="noopener">🔎 Find it here <span aria-hidden="true">↗</span></a>
   <p class="tq-src" id="tsrc"></p>
@@ -349,8 +358,9 @@ h2{font-size:28px;line-height:1.15}
   <h2 id="h-badge" class="sr" tabindex="-1">Your prize badge</h2>
   <div class="badge" id="badge">
     <div class="holo" aria-hidden="true"></div>
+    <img class="logo sm" src="https://www.abac.edu/_assets/images/logo-white.svg" alt="ABAC, Stafford School of Business" onload="var t=this.nextElementSibling;if(t)t.hidden=true" onerror="this.remove()">
     <p class="b-top">ABAC · STAFFORD SCHOOL OF BUSINESS</p>
-    <p class="b-sub">Business Career Compass</p>
+    <p class="b-sub">Career Compass · <i>#StayCloseGoFar</i></p>
     <div class="b-medal" aria-hidden="true"><span id="b-em"></span></div>
     <span class="b-tier" id="b-tier"></span>
     <p class="b-name" id="b-name"></p>
@@ -372,15 +382,15 @@ h2{font-size:28px;line-height:1.15}
 <!-- shared SVG symbols -->
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <defs>
-    <radialGradient id="cg"><stop offset="0" stop-color="#24477f"/><stop offset="1" stop-color="#0b1a33"/></radialGradient>
+    <radialGradient id="cg"><stop offset="0" stop-color="#0b6b3c"/><stop offset="1" stop-color="#00331b"/></radialGradient>
     <g id="dial">
-      <circle cx="100" cy="100" r="95" fill="url(#cg)" stroke="#f2c14e" stroke-width="5"/>
-      <circle cx="100" cy="100" r="78" fill="none" stroke="rgba(242,193,78,.4)" stroke-width="1.5" stroke-dasharray="2 6"/>
-      <g stroke="#f2c14e" stroke-width="2" opacity=".6">
+      <circle cx="100" cy="100" r="95" fill="url(#cg)" stroke="#FEBE10" stroke-width="5"/>
+      <circle cx="100" cy="100" r="78" fill="none" stroke="rgba(254,190,16,.4)" stroke-width="1.5" stroke-dasharray="2 6"/>
+      <g stroke="#FEBE10" stroke-width="2" opacity=".6">
         <line x1="100" y1="8" x2="100" y2="18"/><line x1="100" y1="182" x2="100" y2="192"/>
         <line x1="8" y1="100" x2="18" y2="100"/><line x1="182" y1="100" x2="192" y2="100"/>
       </g>
-      <g font-family="Georgia,serif" font-weight="700" font-size="20" fill="#f2c14e" text-anchor="middle">
+      <g font-family="Georgia,serif" font-weight="700" font-size="20" fill="#FEBE10" text-anchor="middle">
         <text x="100" y="40">N</text><text x="166" y="107">E</text><text x="100" y="174">S</text><text x="34" y="107">W</text>
       </g>
       <g font-size="15" text-anchor="middle">
@@ -390,7 +400,7 @@ h2{font-size:28px;line-height:1.15}
     <g id="ndl">
       <polygon points="100,20 111,100 100,110 89,100" fill="#ff7a7a"/>
       <polygon points="100,180 111,100 100,90 89,100" fill="#f5f1e6"/>
-      <circle cx="100" cy="100" r="9" fill="#f2c14e" stroke="#0b1a33" stroke-width="3"/>
+      <circle cx="100" cy="100" r="9" fill="#FEBE10" stroke="#00331b" stroke-width="3"/>
     </g>
   </defs>
 </svg>
@@ -430,17 +440,23 @@ h2{font-size:28px;line-height:1.15}
 
   const BIZ = 'https://www.abac.edu/academics/schools/business/index.html';
   const BAIN = 'https://www.abac.edu/academics/bainbridge.html';
+  const COST = 'https://www.abac.edu/admissions/student_accounts/cost-attendance.html';
+  const ASK = 'ask Ms. Pashnyak 😉';
   const TRIVIA = [
-    { q:'ABAC has the ONLY one of these in Georgia:', u:BIZ, s:'Stafford School of Business page',
-      a:['Bachelor of Science in Business','Bachelor of Business Analytics','Business Esports degree'], c:0 },
-    { q:'Business majors must complete at least one internship worth…', u:BIZ, s:'Stafford School of Business page',
-      a:['1 credit','3 credits','12 credits'], c:1 },
-    { q:'How many acres of oak & pine is ABAC Bainbridge?', u:BAIN, s:'ABAC Bainbridge page',
-      a:['17','1,730','173'], c:2 },
+    { q:'What’s the ABAC Bainbridge motto?', u:BAIN, s:'ABAC Bainbridge page',
+      a:['#GoBigGoHome','#StayCloseGoFar','#WorkHardPlayHard'], c:1 },
+    { q:'ABAC’s estimated yearly in-state tuition (2026–27)?', u:COST, s:'Cost of Attendance page',
+      a:['$3,156','$18,500','$31,560'], c:0 },
+    { q:'Over 50% of ABAC students graduate with how much student loan debt?', u:null, s:ASK,
+      a:['$10,000','$50,000','Zero'], c:2 },
+    { q:'How can you take ABAC classes?', u:BAIN, s:'ABAC Bainbridge page, or ' + ASK,
+      a:['Online','On campus in Bainbridge or Tifton','Hybrid via Teams','All of the above'], c:3 },
+    { q:'Most ABAC Bainbridge business students already…', u:null, s:ASK,
+      a:['Work or run their own business','Live in campus dorms','Play college sports'], c:0 },
     { q:'You can dual enroll at ABAC Bainbridge after finishing which grade?', u:BAIN, s:'ABAC Bainbridge page',
-      a:['10th grade','11th grade','12th grade'], c:0 },
-    { q:'Who is a Business Professor at ABAC Bainbridge?', u:'https://www.abac.edu/directory/profiles/tatyana-pashnyak.html', s:'she might be standing right in front of you 😉',
-      a:['Professor Moneybags','Dr. Stock Market','Tatyana Pashnyak'], c:2 }
+      a:['9th grade','10th grade','11th grade'], c:1 },
+    { q:'Which business professor is based at ABAC Bainbridge?', u:null, s:'she might be standing right in front of you 😉',
+      a:['Ryan Currie','Yu Zhang','Tatyana Pashnyak'], c:2 }
   ];
   const BONUS = 30;
 
@@ -483,7 +499,7 @@ h2{font-size:28px;line-height:1.15}
   addEventListener('resize', size); size();
   function confetti(n = 90) {
     if (RM) return;
-    const cols = ['#f2c14e','#ffd97a','#ff7a7a','#5ee08f','#60a5fa','#f5f1e6'], k = dpr();
+    const cols = ['#FEBE10','#FFD452','#ff7a7a','#5ee08f','#60a5fa','#f5f1e6'], k = dpr();
     for (let i = 0; i < n; i++) parts.push({ x:cv.width/2, y:cv.height*.35, vx:(Math.random()-.5)*16*k, vy:(-Math.random()*13-4)*k,
       s:(5+Math.random()*6)*k, c:cols[i%cols.length], r:Math.random()*6, vr:(Math.random()-.5)*.35, life:0 });
     if (!raf) loop();
@@ -751,7 +767,7 @@ h2{font-size:28px;line-height:1.15}
     $('tq').textContent = t.q;
     $('tcount').textContent = `${ti + 1} / ${TRIVIA.length}`;
     $('tprog').style.width = (ti / TRIVIA.length * 100) + '%';
-    $('tfind').href = t.u;
+    $('tfind').hidden = !t.u; if (t.u) $('tfind').href = t.u;
     $('tfind').setAttribute('aria-label', `Find it here: opens the ${t.s} in a new tab`);
     $('tsrc').textContent = 'Hint: ' + t.s;
     $('tfind').setAttribute('aria-label', `Find it here: opens an ABAC page in a new tab`);
